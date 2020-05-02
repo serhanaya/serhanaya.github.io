@@ -1,0 +1,585 @@
+<!DOCTYPE html><html lang="en" > <!-- The Head v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><title>Quantifying the Quality of Classification Models |</title><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin><link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" as="style" href="/assets/css/main.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/main.css"><link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"><link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/popper.js@1.15.0/dist/umd/popper.min.js" integrity="sha256-fTuUgtT7O2rqoImwjrhDgbXTKUwyxxujIMRIK7TbuNU=" crossorigin> <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> <script> window.jQuery || document.write('<script src="/assets/lib/jquery-3.4.1.min.js"><\/script>'); </script> <script src="https://cdn.jsdelivr.net/npm/popper.js@1.15.0/dist/umd/popper.min.js" integrity="sha256-fTuUgtT7O2rqoImwjrhDgbXTKUwyxxujIMRIK7TbuNU=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha256-5+02zu5UULQkO7w1GIr6vftCgMfFdZcAHeDtFnKZsBs=" crossorigin="anonymous" async></script> <script src="/assets/js/dist/commons.js" async></script> <script src="/assets/js/dist/timeago.min.js" async></script><link rel="preload" as="style" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/syntax.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/syntax.css"><link rel="preload" as="style" href="/assets/lib/bootstrap-toc-1.0.1/bootstrap-toc.min.css"><link rel="preload" as="script" href="/assets/lib/bootstrap-toc-1.0.1/bootstrap-toc.min.js"><link rel="stylesheet" href="/assets/lib/bootstrap-toc-1.0.1/bootstrap-toc.min.css" /> <script src="/assets/lib/bootstrap-toc-1.0.1/bootstrap-toc.min.js" async></script> <script src="/assets/js/dist/toc.min.js" async></script> <script src="/assets/js/dist/tooltip-loader.min.js" async></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"> <!-- The Side Bar v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/" alt="avatar"> <img src="/assets/img/sample/bio-photo.jpg" alt="avatar"> </a></div><div class="profile-text mt-3"><div id="site-title"> <a href="/"></a></div><div id="site-subtitle" class="font-italic"></div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-home ml-3 mr-3 unloaded"></i> <span>HOME</span> </a></li><li class="nav-item d-flex justify-content-center "> <a href="/tabs/categories/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-stream ml-3 mr-3 unloaded"></i> <span>CATEGORIES</span> </a></li><li class="nav-item d-flex justify-content-center "> <a href="/tabs/tags/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-tags ml-3 mr-3 unloaded"></i> <span>TAGS</span> </a></li><li class="nav-item d-flex justify-content-center "> <a href="/tabs/archives/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-archive ml-3 mr-3 unloaded"></i> <span>ARCHIVES</span> </a></li><li class="nav-item d-flex justify-content-center "> <a href="/tabs/about/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-info ml-3 mr-3 unloaded"></i> <span>ABOUT</span> </a></li></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <span id="mode-toggle-wrapper"> <!-- Switch the mode between dark and light. v2.1 https://github.com/cotes2020/jekyll-theme-chirpy © 2020 Cotes Chung MIT License --> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightkMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightkMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/serhanaya" target="_blank"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/" target="_blank"> <i class="fab fa-twitter"></i> </a> <a href="javascript:window.open('mailto:' + ['',''].join('@'))"> <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" target="_blank"> <i class="fas fa-rss"></i> </a></div></div><!-- The Top Bar v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>Quantifying the Quality of Classification Models</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"> <!-- Fixed kramdown code highlight rendering: https://github.com/penibelst/jekyll-compress-html/issues/101 https://github.com/penibelst/jekyll-compress-html/issues/71#issuecomment-188144901 --><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>Quantifying the Quality of Classification Models</h1><div class="post-meta text-muted d-flex flex-column"><div> Posted <span class="timeago" data-toggle="tooltip" data-placement="bottom" title="Tue, Oct 10, 2017, 8:00 AM +0300"> Oct 10, 2017 <i class="unloaded">2017-10-10T08:00:00+03:00</i> </span> by <span class="author"> S. Aya </span></div></div><div class="post-content"><h2 id="introduction">Introduction</h2><ul><li>The aim of this study is to go through the exploratory analysis and modeling process of a classification example. The model is going to be selected considering its computational complexity, future data, production environment.</li><li>Every step is explained in detail.</li><li><a href="/_data/posts/clf_example/train_data.csv">The dataset</a> is related to cancer diagnoses of different types. Each case includes information on the properties (<code class="highlighter-rouge">radius</code>, <code class="highlighter-rouge">texture</code> and <code class="highlighter-rouge">perimeter</code>) of the three most characteristic cell nuclei.</li><li>Moreover, the <code class="highlighter-rouge">age</code> of the person, the <code class="highlighter-rouge">date of the diagnose</code> and <code class="highlighter-rouge">treatment start</code>, as well as the <code class="highlighter-rouge">cancer type</code> is available.</li><li><p>We’re going to</p><ol><li>Perform an exploratory data analysis</li><li>Create a model for predicting the <code class="highlighter-rouge">cancer_type</code></li></ol></li></ul><h2 id="importing-data">Importing Data</h2><ul><li>The first step is to look at the size of the data. Number of columns and rows are investigated with shell commands.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="o">%%</span><span class="n">bash</span>
+
+<span class="n">wc</span> <span class="o">-</span><span class="n">l</span> <span class="s">"_data/train_data.csv"</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>     399 data/train_data.csv
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">cat</span> <span class="s">"_data/train_data.csv"</span> <span class="o">|</span> <span class="n">head</span> <span class="o">-</span><span class="mi">2</span>
+</pre></table></code></div></div><div class="language-text highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>radius_0,texture_0,perimeter_0,radius_1,texture_1,perimeter_1,radius_2,texture_2,perimeter_2,age,treatment_date,diagnose_date,cancer_type
+19.8583944023,27.2044366426,136.324255564,22.6832898128,32.80257840656313,119.523841253,21.4770518558,27.3070874472,82.36693560733677,44,2006-06-03,2005-10-23,0
+</pre></table></code></div></div><p><strong>Notes</strong>:</p><ul><li>All but <code class="highlighter-rouge">treatment_date</code> and <code class="highlighter-rouge">diagnose_date</code> columns seems to have numeric data type.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="o">%%</span><span class="n">bash</span>
+
+<span class="n">head</span> <span class="o">-</span><span class="mi">1</span> <span class="s">"_data/train_data.csv"</span> <span class="o">|</span> <span class="n">tail</span> <span class="o">-</span><span class="mi">1</span> <span class="o">|</span> <span class="n">sed</span> <span class="s">'s/,/ /g'</span> <span class="o">|</span> <span class="n">wc</span> <span class="o">-</span><span class="n">w</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>      13
+</pre></table></code></div></div><ul><li>Next step is to import the necessary libraries.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"_data/train_data.csv"</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s">'treatment_date'</span><span class="p">,</span> <span class="s">'diagnose_date'</span><span class="p">])</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">train</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 398 entries, 0 to 397
+Data columns (total 13 columns):
+radius_0          398 non-null float64
+texture_0         398 non-null float64
+perimeter_0       398 non-null float64
+radius_1          343 non-null float64
+texture_1         398 non-null float64
+perimeter_1       264 non-null float64
+radius_2          398 non-null float64
+texture_2         398 non-null object
+perimeter_2       398 non-null float64
+age               398 non-null int64
+treatment_date    398 non-null datetime64[ns]
+diagnose_date     398 non-null datetime64[ns]
+cancer_type       398 non-null int64
+dtypes: datetime64[ns](2), float64(8), int64(2), object(1)
+memory usage: 40.5+ KB
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">train</span><span class="p">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></table></code></div></div><figure> <a href="/assets/img/posts/2017/clf_example/train_head.png"><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2017/clf_example/train_head.png" /></a><figcaption><a title="Main Page"></a></figcaption></figure><p><strong>First Thoughts</strong>:</p><ul><li>The data seems to be composed of all numeric data except for the <code class="highlighter-rouge">*._date</code> columns, however <code class="highlighter-rouge">pd.DataFrame.info()</code> command returned <code class="highlighter-rouge">object</code> types. This is probably due to missing values at those columns.</li><li>We have <code class="highlighter-rouge">datetime</code> types for the <code class="highlighter-rouge">treatment_date</code> and <code class="highlighter-rouge">diagnose_date</code> columns.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">Counter</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s">'cancer_type'</span><span class="p">])</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>Counter({0: 148, 1: 250})
+</pre></table></code></div></div><p><strong>Note</strong>: Train data is not perfectly balanced, but not dangerously skewed either. And this ratio should be noted for the train/test data splits and later fitting the ml model. It would be beneficial to keep this ratio approximately same among the splits.</p><h2 id="exploratory-analysis">Exploratory Analysis</h2><ul><li>We assume that the methodology for the diagnose of the cancer type did not change over the time the data collected.</li><li>Thus, the dates are not related to the type of the cancer but the time difference might be!</li><li>So, adding a new variable <code class="highlighter-rouge">timediff</code> for the time difference between <code class="highlighter-rouge">treatment_date</code> and <code class="highlighter-rouge">diagnose_date</code>.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">train</span><span class="p">[</span><span class="s">'timediff'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s">'treatment_date'</span><span class="p">]</span> <span class="o">-</span> <span class="n">train</span><span class="p">[</span><span class="s">'diagnose_date'</span><span class="p">]).</span><span class="n">dt</span><span class="p">.</span><span class="n">days</span>
+</pre></table></code></div></div><ul><li>Dropping the variables <code class="highlighter-rouge">treatment_date</code> and <code class="highlighter-rouge">diagnose_date</code>.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">train</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s">'treatment_date'</span><span class="p">,</span> <span class="s">'diagnose_date'</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></table></code></div></div><ul><li>The <code class="highlighter-rouge">texture_2</code> column should be numeric, but <code class="highlighter-rouge">read_csv</code> couldn’t recognize it. The problem is the missing values that are coded like <code class="highlighter-rouge">xx</code>. Pandas built-in function <code class="highlighter-rouge">to_numeric</code> with <code class="highlighter-rouge">errors='coerce'</code> parameter will help to convert the data type to numeric.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">train</span><span class="p">[</span><span class="s">'texture_2'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">train</span><span class="p">[</span><span class="s">'texture_2'</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s">'coerce'</span><span class="p">)</span>
+</pre></table></code></div></div><ul><li>Checking again the data types, missing values and the size of the <code class="highlighter-rouge">train</code> data frame by using <code class="highlighter-rouge">pandas.DataFrame.info()</code> command.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">train</span><span class="p">.</span><span class="n">info</span><span class="p">()</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 398 entries, 0 to 397
+Data columns (total 12 columns):
+radius_0       398 non-null float64
+texture_0      398 non-null float64
+perimeter_0    398 non-null float64
+radius_1       343 non-null float64
+texture_1      398 non-null float64
+perimeter_1    264 non-null float64
+radius_2       398 non-null float64
+texture_2      382 non-null float64
+perimeter_2    398 non-null float64
+age            398 non-null int64
+cancer_type    398 non-null int64
+timediff       398 non-null int64
+dtypes: float64(9), int64(3)
+memory usage: 37.4 KB
+</pre></table></code></div></div><ul><li>Fair enough, everything seems to be allright. The data types are all numeric. There are some missing files, we’ll deal with them in short. But before, we should check <code class="highlighter-rouge">standard deviation</code>, <code class="highlighter-rouge">mean</code>, <code class="highlighter-rouge">median</code>, <code class="highlighter-rouge">quartiles</code>, <code class="highlighter-rouge">min</code> and <code class="highlighter-rouge">max</code> values for these numeric columns.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">train</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'cancer_type'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">).</span><span class="n">describe</span><span class="p">()</span>
+</pre></table></code></div></div><figure> <a href="/assets/img/posts/2017/clf_example/numeric_summary.png"><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2017/clf_example/numeric_summary.png" /></a><figcaption><a title="Main Page"></a></figcaption></figure><p><strong>Notes</strong>:</p><ul><li><p>A general definition of <code class="highlighter-rouge">outlier</code> is the value which is 1.5 Interquartile range (IQR) above third quartile (Q3) or below first quartile (Q1).</p></li><li><p>There are also more complicated approaches to the outliers.</p><ul><li>Ref: Wilkinson, L. 1999 Visualizing Outliers. In this reference Mr. Leland Wilkinson from H2O.ai presents a new algorithms <code class="highlighter-rouge">hdoutliers</code> for detecting multidimensional outliers. This approach deals with a mixture of categorical and continuous variables. Visualization with dot plots are also mentioned.</li></ul></li><li><p><code class="highlighter-rouge">radius_0</code>, <code class="highlighter-rouge">perimeter_0</code> and <code class="highlighter-rouge">perimeter_1</code> are noted for further look. Outliers are not necessarily erroronous data unless some reason against them.</p></li><li><p>From my experience, I should say that the outliers shouldn’t be removed without consulting an expert in the field.</p></li><li>Next step is to explore the data visually. First plot is going to be a pair plot.</li><li>This chart type shows pairwise relationships using scatter plots with histograms in the diagonal.</li><li>Note that diagonal plots can be changed to kde, or some other type.</li><li>This plot shows the pairwise relationships of the variables. To map plot aspects to different colors according to the target value, the parameter <code class="highlighter-rouge">hue='cancer_type'</code> is added.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="n">features</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'cancer_type'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">).</span><span class="n">columns</span>
+<span class="n">target</span> <span class="o">=</span> <span class="s">'cancer_type'</span>
+
+<span class="k">with</span> <span class="n">sns</span><span class="p">.</span><span class="n">plotting_context</span><span class="p">(</span><span class="s">"notebook"</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">sns</span><span class="p">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">train</span><span class="p">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">x_vars</span><span class="o">=</span><span class="n">features</span><span class="p">,</span> <span class="n">y_vars</span><span class="o">=</span><span class="n">features</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
+</pre></table></code></div></div><p><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2017/clf_example/output_30_0.png" alt="png" /></p><ul><li>Here we can see that:<ul><li>Radius of the <code class="highlighter-rouge">type_0</code> cell nuclei, <code class="highlighter-rouge">radius_0</code> has serious outliers.</li><li>Looking at the scatter plot there are some distinct groupings of the points, which might indicate there could be some clustering going on.<ul><li>Some of the variables such as <code class="highlighter-rouge">radius_1</code> or <code class="highlighter-rouge">perimeter_1</code> are important factors to distinguish different cancer types. For example higher values of these variables are likely to belong to type_1 and vice versa.</li></ul></li><li>High positive covariance is is visible between some of the variables such as <code class="highlighter-rouge">perimeter_0</code> and <code class="highlighter-rouge">radius_2</code>; <code class="highlighter-rouge">radius_1</code> and <code class="highlighter-rouge">radius_2</code>. This relationship will be better seen in the following heatmap plot for variable correlations.</li><li>A negative linear relationship can be seen for <code class="highlighter-rouge">timediff</code> ~ <code class="highlighter-rouge">age</code>. Since the cancer can be diagnosed in a routine control and older people are more likely to have a routine health check-up or control the time difference between <code class="highlighter-rouge">treatment_date</code> and <code class="highlighter-rouge">diagnosis_date</code> is less than younger people.</li><li>The distributions of the variables are further investigated in the following plots.</li></ul></li><li>Next we’ll use another tool <code class="highlighter-rouge">parallel_coordinates</code> plot from Pandas.plotting library for visualizing high dimensional multivariate data.</li><li>A parallel coordinate plot maps each row in the data as a line.</li><li>Each attribute of a row is represented by a point on the line.</li><li>Coloring the lines by target class, here <code class="highlighter-rouge">cancer_type</code> allows to see any patterns or clustering.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="kn">import</span> <span class="nn">matplotlib</span>
+
+<span class="kn">from</span> <span class="nn">pandas.plotting</span> <span class="kn">import</span> <span class="n">parallel_coordinates</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">parallel_coordinates</span><span class="p">(</span><span class="n">train</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'timediff'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="s">'cancer_type'</span><span class="p">,)</span>
+</pre></table></code></div></div><p><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2017/clf_example/output_34_0.png" alt="png" /></p><p><strong>Notes</strong>:</p><ul><li>Outliers in <code class="highlighter-rouge">radius_0</code> (the most) and <code class="highlighter-rouge">perimeter_0</code> and <code class="highlighter-rouge">perimeter_1</code> (less).</li><li><p><code class="highlighter-rouge">perimeter_0</code>, <code class="highlighter-rouge">radius_1</code>, <code class="highlighter-rouge">perimeter_1</code>, <code class="highlighter-rouge">radius_2</code> are the variables that split the different <code class="highlighter-rouge">cancer_type</code> fairly clearly. <code class="highlighter-rouge">cancer_type_0</code> have higher values for all these variables.</p></li><li>Next we’ll draw categorical scatterplots for the data.</li><li>Swarms of the numerical variables are grouped by target.</li><li>Pros: Better representation of the distribution of values.</li><li>Cons: It does not scale as well to large numbers of observations (not a problem here).</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre><span class="n">colnames</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="s">"cancer_type"</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">).</span><span class="n">columns</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">))</span>
+<span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">ax_curr</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+        <span class="n">sns</span><span class="p">.</span><span class="n">swarmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'cancer_type'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">colnames</span><span class="p">[</span><span class="n">counter</span><span class="p">],</span> <span class="n">data</span><span class="o">=</span><span class="n">train</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax_curr</span><span class="p">)</span>
+        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span>  <span class="n">counter</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">colnames</span><span class="p">):</span>
+            <span class="k">break</span>
+</pre></table></code></div></div><p><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2017/clf_example/output_37_0.png" alt="png" /></p><ul><li>Data size allows us to examine with bee swarm plots.</li><li><code class="highlighter-rouge">radius_0</code>: Outliers block the visual.</li><li><code class="highlighter-rouge">texture_0</code>: Similar distribution for different types of cancer. An outlier is visible in this data.</li><li><code class="highlighter-rouge">perimeter_0</code>: Positive skewed distribution for type_0, minor outliers. type_1 more likely to have lower value.</li><li><code class="highlighter-rouge">radius_1</code>: Positive skewed distribution for type_0, minor outliers. type_1 more likely to have lower value.</li><li><code class="highlighter-rouge">texture_1</code>: A uniform distribution. No outliers. type_0 more likely to have higher values.</li><li><code class="highlighter-rouge">perimeter_1</code>: Positive skewed distribution for type_0, minor outliers. type_1 more likely to have lower value.</li><li><code class="highlighter-rouge">radius_2</code>: Positive skewed distribution or normal distribution. More visible for type_0. type_1 more likely to have lower value.</li><li><code class="highlighter-rouge">texture_2</code>: More like a normal distribution.</li><li><code class="highlighter-rouge">perimeter_2</code>: A uniform distribution. No outliers.</li><li><code class="highlighter-rouge">age</code>: A uniform distribution. No outliers.</li><li><code class="highlighter-rouge">timediff</code>: A nice normal distribution.</li></ul><p>We’ll see whether the distributions are normal in the next plot.</p><ul><li>So, next step is to define <code class="highlighter-rouge">ecdf</code> function, i.e. empirical cumulative distribution function to further investigate the data and its distribution.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">ecdf</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="s">"""Compute ECDF for a one-dimensional array of measurements."""</span>
+
+    <span class="c1"># Number of data points: n
+</span>    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># x-data for the ECDF: x
+</span>    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">sort</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># y-data for the ECDF: y
+</span>    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
+
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+</pre><td class="rouge-code"><pre><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">))</span>
+<span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">colname</span> <span class="o">=</span> <span class="n">colnames</span><span class="p">[</span><span class="n">counter</span><span class="p">]</span>
+        <span class="n">mean_0</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">train</span><span class="p">[</span><span class="s">'cancer_type'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">colname</span><span class="p">].</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">std_0</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">train</span><span class="p">[</span><span class="s">'cancer_type'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">colname</span><span class="p">].</span><span class="n">std</span><span class="p">()</span>
+        <span class="n">samples_0</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mean_0</span><span class="p">,</span> <span class="n">std_0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+        <span class="n">x_theor_0</span><span class="p">,</span> <span class="n">y_theor_0</span> <span class="o">=</span> <span class="n">ecdf</span><span class="p">(</span><span class="n">samples_0</span><span class="p">)</span>
+
+        <span class="n">mean_1</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">train</span><span class="p">[</span><span class="s">'cancer_type'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">colname</span><span class="p">].</span><span class="n">mean</span><span class="p">()</span>
+        <span class="n">std_1</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">train</span><span class="p">[</span><span class="s">'cancer_type'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">colname</span><span class="p">].</span><span class="n">std</span><span class="p">()</span>
+        <span class="n">samples_1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mean_1</span><span class="p">,</span> <span class="n">std_1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+        <span class="n">x_theor_1</span><span class="p">,</span> <span class="n">y_theor_1</span> <span class="o">=</span> <span class="n">ecdf</span><span class="p">(</span><span class="n">samples_1</span><span class="p">)</span>
+
+
+        <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span> <span class="o">=</span> <span class="n">ecdf</span><span class="p">(</span><span class="n">train</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">train</span><span class="p">[</span><span class="s">'cancer_type'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">colname</span><span class="p">].</span><span class="n">dropna</span><span class="p">().</span><span class="n">values</span><span class="p">)</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">ecdf</span><span class="p">(</span><span class="n">train</span><span class="p">.</span><span class="n">loc</span><span class="p">[</span><span class="n">train</span><span class="p">[</span><span class="s">'cancer_type'</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">colname</span><span class="p">].</span><span class="n">dropna</span><span class="p">().</span><span class="n">values</span><span class="p">)</span>
+
+        <span class="c1"># Generate plot
+</span>        <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">x_theor_0</span><span class="p">,</span> <span class="n">y_theor_0</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">'red'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">x_theor_1</span><span class="p">,</span> <span class="n">y_theor_1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">'blue'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="s">'.'</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s">'none'</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">'gray'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">].</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="s">'.'</span><span class="p">,</span> <span class="n">linestyle</span> <span class="o">=</span> <span class="s">'none'</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">'orange'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+
+        <span class="c1"># Make the margins nice
+</span>        <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">].</span><span class="n">margins</span><span class="p">(</span><span class="mf">0.02</span><span class="p">)</span>
+
+        <span class="c1"># Label the axes
+</span>        <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">].</span><span class="n">legend</span><span class="p">((</span><span class="s">'theor_0'</span><span class="p">,</span> <span class="s">'theor_1'</span><span class="p">,</span> <span class="s">'type_0'</span><span class="p">,</span> <span class="s">'type_1'</span><span class="p">,),</span> <span class="n">loc</span><span class="o">=</span><span class="s">'lower right'</span><span class="p">)</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">].</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">colname</span><span class="p">)</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">].</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'CDF'</span><span class="p">)</span>
+        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span>  <span class="n">counter</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">colnames</span><span class="p">):</span>
+            <span class="k">break</span>
+</pre></table></code></div></div><p><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2017/clf_example/output_41_0.png" alt="png" /></p><p><strong>Notes</strong>:</p><ul><li><p>Checking if the distributions are normally distributed.</p></li><li><p>Looking at CDF is more effective than PDF since there is no binning bias.</p></li><li><p>To compute the theoretical CDF by sampling we passed two parameters to <code class="highlighter-rouge">np.random.normal</code> which are <code class="highlighter-rouge">mean</code> and <code class="highlighter-rouge">std</code>.</p></li><li><p>The values we choose are directly calculated from the data.</p></li><li><p>The result is that for the some of the features the emprical CDF overlayed beautifully to the theoretical CDF.</p></li><li><p>The emprical CDF plots are also helpful for larger datasets to observe the percentiles.</p></li><li><p>We can apply similar technique to check the distribution of individual column. For example, <code class="highlighter-rouge">perimeter_2</code> is more likely to have a uniform distribution.</p></li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">train</span><span class="p">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">annot</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>  <span class="n">cmap</span><span class="o">=</span><span class="s">"YlGnBu"</span><span class="p">)</span>
+</pre></table></code></div></div><p><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2017/clf_example/output_43_0.png" alt="png" /></p><ul><li><code class="highlighter-rouge">perimeter_0</code>, <code class="highlighter-rouge">radius_1</code>, <code class="highlighter-rouge">perimeter_1</code>, <code class="highlighter-rouge">radius_2</code> have strong correlations with each other. This may effect the models performance if we use a linear model.</li><li>On the other side, negative correlation of these variables with the target variable is good.</li><li><code class="highlighter-rouge">age</code> and <code class="highlighter-rouge">timediff</code> have some negative correlation that explained before.</li></ul><p>Next: Let’s seperate target and feature data and get them ready for modeling.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">y</span> <span class="o">=</span> <span class="n">train</span><span class="p">[</span><span class="s">'cancer_type'</span><span class="p">]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">train</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="s">'cancer_type'</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></table></code></div></div><p>We will next deal with missing values with the help of <code class="highlighter-rouge">Imputer</code> class.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">Imputer</span>
+
+<span class="n">imp</span> <span class="o">=</span> <span class="n">Imputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s">'median'</span><span class="p">)</span>
+
+<span class="n">imp</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>Imputer(axis=0, copy=True, missing_values='NaN', strategy='median', verbose=0)
+</pre></table></code></div></div><ul><li>We have skewed distributions for some of the variables, it is best to use <code class="highlighter-rouge">median</code> for the <code class="highlighter-rouge">strategy</code> parameter.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="c1"># Median for each column.
+</span>
+<span class="n">imp</span><span class="p">.</span><span class="n">statistics_</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>array([  13.46816957,   18.23874229,   87.37676402,   13.38578926,
+         30.89776198,   90.0546129 ,   13.33361036,   19.43609425,
+        129.99269664,   39.        , -244.5       ])
+</pre></table></code></div></div><ul><li>The test data might have missing values for other columns as well. Thus we fitted the Imputer to all 11 numeric columns.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">X_imp</span> <span class="o">=</span> <span class="n">imp</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></table></code></div></div><ul><li>Another important section: Scaling. We have outliers and skewed datasets. For the modeling part of the analysis we will possibly need a scaled dataset.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">QuantileTransformer</span>
+
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">QuantileTransformer</span><span class="p">(</span><span class="n">output_distribution</span><span class="o">=</span><span class="s">'normal'</span><span class="p">)</span>
+
+<span class="n">scaler</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_imp</span><span class="p">)</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>QuantileTransformer(copy=True, ignore_implicit_zeros=False, n_quantiles=1000,
+          output_distribution='normal', random_state=None,
+          subsample=100000)
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">X_sca</span> <span class="o">=</span> <span class="n">scaler</span><span class="p">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_imp</span><span class="p">)</span>
+</pre></table></code></div></div><p><strong>Notes</strong>:</p><ul><li><p><code class="highlighter-rouge">QuantileTransformer</code> applies a non-linear transformation such that the probability density function of each feature will be mapped to a Gaussian distribution (<code class="highlighter-rouge">output_distribution='normal'</code>).</p></li><li><p>In this case, all the data will be mapped in the range [0, 1], even the outliers which cannot be distinguished anymore from the inliers.</p></li><li><p><code class="highlighter-rouge">QuantileTransformer</code> will also automatically collapse any outlier by setting them to the a priori defined range boundaries (0 and 1).</p></li><li><p>As a negative side, this non-parametetric transformer introduces saturation artifacts for extreme values.</p></li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="k">with</span> <span class="n">sns</span><span class="p">.</span><span class="n">plotting_context</span><span class="p">(</span><span class="s">"notebook"</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="p">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">pd</span><span class="p">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_sca</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">X</span><span class="p">.</span><span class="n">columns</span><span class="p">))</span>
+</pre></table></code></div></div><p><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2017/clf_example/output_57_0.png" alt="png" /></p><ul><li>If we talk about Logistic Regression, the independent variables do not need to be multivariate normal – although multivariate normality yields a more stable solution.</li></ul><h2 id="modeling">Modeling</h2><p>Create a model for predicting the <code class="highlighter-rouge">cancer_type</code> and keep it simple.</p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_sca</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></table></code></div></div><ul><li><code class="highlighter-rouge">stratify=None</code> is by default. So the data is split in a stratified fashion, using this as the class labels, i.e. class ratio for the target variable is kept among splits.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">Counter</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>Counter({0: 108, 1: 190})
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">Counter</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>Counter({0: 40, 1: 60})
+</pre></table></code></div></div><ul><li>cancer_type_0 / cancer_type_1 approximately kept constant.</li></ul><h3 id="logistic-regression">Logistic Regression</h3><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegressionCV</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">log_reg</span> <span class="o">=</span> <span class="n">LogisticRegressionCV</span><span class="p">(</span><span class="n">class_weight</span><span class="o">=</span><span class="s">'balanced'</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s">'liblinear'</span><span class="p">)</span>
+<span class="n">log_reg</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>LogisticRegressionCV(Cs=10, class_weight='balanced', cv=3, dual=False,
+           fit_intercept=True, intercept_scaling=1.0, max_iter=100,
+           multi_class='ovr', n_jobs=1, penalty='l2', random_state=None,
+           refit=True, scoring=None, solver='liblinear', tol=0.0001,
+           verbose=0)
+</pre></table></code></div></div><ul><li><p><code class="highlighter-rouge">C</code> is the regularization term (here <code class="highlighter-rouge">penalty=l2</code>)</p></li><li><p><code class="highlighter-rouge">Cs</code> parameter is the number of regularization term to be searched (here is 10).</p></li><li><p>Regularization addresses the multi-collinearity problem that we mentioned with some of the variables.</p></li><li><p>Regularization improves the generalization performance, i.e., the performance on new, unseen data.</p></li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">log_reg</span><span class="p">.</span><span class="n">C_</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>array([ 0.35938137])
+</pre></table></code></div></div><ul><li>Lower C (‘l2’) means more regularized model.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">y_pred_log</span> <span class="o">=</span> <span class="n">log_reg</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">metrics</span><span class="p">.</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_log</span><span class="p">)</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>array([[34,  6],
+       [ 6, 54]])
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="k">print</span><span class="p">(</span><span class="n">metrics</span><span class="p">.</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_log</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="p">[</span><span class="s">'cancer_type_0'</span><span class="p">,</span> <span class="s">'cancer_type_1'</span><span class="p">],</span> <span class="n">sample_weight</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>               precision    recall  f1-score   support
+
+cancer_type_0       0.85      0.85      0.85        40
+cancer_type_1       0.90      0.90      0.90        60
+
+  avg / total       0.88      0.88      0.88       100
+</pre></table></code></div></div><ul><li>Balance between <code class="highlighter-rouge">precision</code> and <code class="highlighter-rouge">recall</code> is achieved for the <code class="highlighter-rouge">X_test</code>.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">y_score_log</span> <span class="o">=</span> <span class="n">log_reg</span><span class="p">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></table></code></div></div><ul><li><code class="highlighter-rouge">decision_function</code> method of <code class="highlighter-rouge">LogisticRegressionCV</code> class predicts confidence scores for samples. We’ll need this to draw PR curve and ROC curve.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">precision_recall_curve</span>
+
+<span class="n">precision_log</span><span class="p">,</span> <span class="n">recall_log</span><span class="p">,</span> <span class="n">threshold_log</span> <span class="o">=</span> <span class="n">precision_recall_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_score_log</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">average_precision_score</span>
+<span class="n">average_precision_log</span> <span class="o">=</span> <span class="n">average_precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_score_log</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'Average precision-recall score: {0:0.2f}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span>
+      <span class="n">average_precision_log</span><span class="p">))</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>Average precision-recall score: 0.94
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">step</span><span class="p">(</span><span class="n">recall_log</span><span class="p">,</span> <span class="n">precision_log</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'b'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+         <span class="n">where</span><span class="o">=</span><span class="s">'post'</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">recall_log</span><span class="p">,</span> <span class="n">precision_log</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="s">'post'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s">'b'</span><span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Recall'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Precision'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.02</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">xlim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'Log_Reg 2-class Precision-Recall curve: area={0:0.2f}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span>
+          <span class="n">average_precision_log</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+</pre></table></code></div></div><p><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2017/clf_example/output_81_0.png" alt="png" /></p><ul><li><p>PR curve is plotted by measuring precision and recall at various threshold values.</p></li><li><p>This curve is preferred whenever positive class (here <code class="highlighter-rouge">type_0</code>) is rare or when false positives are more important than false negatives.</p></li><li><p>We have slightly less type_0 samples, however false positives (predicted:0 actual:1) are not more important than false negatives (predicted: 1, actual: 0).</p></li><li><p>A more clear explanation would be, PR curve is better for rare positive class or problems where “positive” class is more interesting than the negative class.</p></li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_curve</span>
+
+<span class="n">fpr_log</span><span class="p">,</span> <span class="n">tpr_log</span><span class="p">,</span> <span class="n">thresholds_log</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_score_log</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span>
+
+<span class="n">roc_auc_log</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_score_log</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="k">def</span> <span class="nf">plot_roc_curve</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s">'k--'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="s">'post'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s">'b'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'False Positive Rate'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'True Positive Rate'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plot_roc_curve</span><span class="p">(</span><span class="n">fpr_log</span><span class="p">,</span> <span class="n">tpr_log</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'ROC curve (area = %0.2f)'</span> <span class="o">%</span> <span class="n">roc_auc_log</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">"lower right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="c1">#save_fig("roc_curve_plot")
+</span><span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</pre></table></code></div></div><p><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2017/clf_example/output_85_0.png" alt="png" /></p><ul><li><p>ROC curve is plotted by measuring recall (true positive rate, sensitivity) and false positive rate (1 - specifity) at various threshold values.</p></li><li><p>It is mentioned that the PR curve is preferred whenever positive class (here <code class="highlighter-rouge">type_0</code>) is rare or when false positives are more important than false negatives. The ROC curve is used otherwise</p></li><li><p>If we think that our target class is balanced enough or false negatives (predicted: <code class="highlighter-rouge">type_1</code>, actual: <code class="highlighter-rouge">type_0</code>) are more important than false positives (predicted: <code class="highlighter-rouge">type_0</code>, actual: <code class="highlighter-rouge">type_1</code>), then ROC curve is the plot to look.</p></li></ul><h3 id="support-vector-machine">Support Vector Machine</h3><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="n">param_grid</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span><span class="s">'C'</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="s">'kernel'</span><span class="p">:</span> <span class="p">[</span><span class="s">'linear'</span><span class="p">],</span> <span class="s">'class_weight'</span><span class="p">:</span> <span class="p">[{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">4</span><span class="p">}]},</span>
+  <span class="p">{</span><span class="s">'C'</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="s">'kernel'</span><span class="p">:</span> <span class="p">[</span><span class="s">'poly'</span><span class="p">],</span> <span class="s">'class_weight'</span><span class="p">:</span> <span class="p">[{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">4</span><span class="p">}],</span> <span class="s">'degree'</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]},</span>
+  <span class="p">{</span><span class="s">'C'</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="s">'kernel'</span><span class="p">:</span> <span class="p">[</span><span class="s">'rbf'</span><span class="p">],</span> <span class="s">'class_weight'</span><span class="p">:</span> <span class="p">[{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">4</span><span class="p">}],</span> <span class="s">'gamma'</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">]},</span>
+ <span class="p">]</span>
+</pre></table></code></div></div><p><strong>Notes</strong>:</p><ul><li>Normally we should do a coarse grid search over hyperparameters then a finer search. The size of the dataset allowed us to look all at once.</li><li>C: Regularization parameter. Higher C means less regularization.</li><li>kernel: <code class="highlighter-rouge">linear</code>, <code class="highlighter-rouge">poly</code> (Polynomial) or <code class="highlighter-rouge">rbf</code> (Gaussian Radial Basis Function).</li><li>degree: Only in <code class="highlighter-rouge">poly</code></li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">svc</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">SVC</span><span class="p">(),</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">svc</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre>GridSearchCV(cv=3, error_score='raise',
+       estimator=SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape='ovr', degree=3, gamma='auto', kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False),
+       fit_params=None, iid=True, n_jobs=1,
+       param_grid=[{'class_weight': [{0: 2}, {0: 3}, {0: 4}], 'kernel': ['linear'], 'C': [1, 10, 100, 1000]}, {'class_weight': [{0: 2}, {0: 3}, {0: 4}], 'degree': [2, 3, 4], 'kernel': ['poly'], 'C': [1, 10, 100, 1000]}, {'class_weight': [{0: 2}, {0: 3}, {0: 4}], 'kernel': ['rbf'], 'C': [1, 10, 100, 1000], 'gamma': [0.1, 0.01, 0.001, 0.0001]}],
+       pre_dispatch='2*n_jobs', refit=True, return_train_score=True,
+       scoring=None, verbose=0)
+</pre></table></code></div></div><ul><li><code class="highlighter-rouge">coef</code>: This hyperparameter controls how much the model is influenced by high-degree versus low-degree polynomials.</li></ul><p><strong>Notes</strong>:</p><ul><li><p><code class="highlighter-rouge">class_weight = balanced</code> since we have slightly skewed target data.</p></li><li><p><code class="highlighter-rouge">scoring = f1</code> since we need to predict both classes correctly. F1 Score balances <code class="highlighter-rouge">precision</code> and <code class="highlighter-rouge">recall</code>.</p><ul><li>Recall: Number of positive predictions divided by the number of positive class values in the test data.</li><li>Precision: Number of positive predictions divided by the total number of positive class values predicted.</li></ul></li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="k">print</span><span class="p">(</span><span class="n">svc</span><span class="p">.</span><span class="n">best_params_</span><span class="p">)</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>{'class_weight': {0: 2}, 'kernel': 'rbf', 'C': 1, 'gamma': 0.1}
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">y_pred_svc</span> <span class="o">=</span> <span class="n">svc</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">metrics</span><span class="p">.</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_svc</span><span class="p">)</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>array([[32,  8],
+       [ 5, 55]])
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="k">print</span><span class="p">(</span><span class="n">metrics</span><span class="p">.</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_svc</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="p">[</span><span class="s">'cancer_type_0'</span><span class="p">,</span> <span class="s">'cancer_type_1'</span><span class="p">],</span> <span class="n">sample_weight</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>               precision    recall  f1-score   support
+
+cancer_type_0       0.86      0.80      0.83        40
+cancer_type_1       0.87      0.92      0.89        60
+
+  avg / total       0.87      0.87      0.87       100
+</pre></table></code></div></div><ul><li>Overall not better than <code class="highlighter-rouge">LogisticRegression</code> if we also think the hyperparameters to tune and time complexity that this algorithm has with the larger datasets.</li></ul><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">y_score_svc</span> <span class="o">=</span> <span class="n">svc</span><span class="p">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">precision_svc</span><span class="p">,</span> <span class="n">recall_svc</span><span class="p">,</span> <span class="n">threshold_svc</span> <span class="o">=</span> <span class="n">precision_recall_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_score_svc</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="n">average_precision_svc</span> <span class="o">=</span> <span class="n">average_precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_score_svc</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'Average precision-recall score: {0:0.2f}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span>
+      <span class="n">average_precision_svc</span><span class="p">))</span>
+</pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>Average precision-recall score: 0.95
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">step</span><span class="p">(</span><span class="n">recall_svc</span><span class="p">,</span> <span class="n">precision_svc</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'b'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+         <span class="n">where</span><span class="o">=</span><span class="s">'post'</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">recall_svc</span><span class="p">,</span> <span class="n">precision_svc</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="s">'post'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s">'b'</span><span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Recall'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Precision'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.02</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">xlim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'SVC 2-class Precision-Recall curve: area={0:0.2f}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span>
+          <span class="n">average_precision_svc</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+</pre></table></code></div></div><p><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2017/clf_example/output_102_0.png" alt="png" /></p><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">fpr_svc</span><span class="p">,</span> <span class="n">tpr_svc</span><span class="p">,</span> <span class="n">thresholds_svc</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_score_svc</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="n">roc_auc_svc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_score_svc</span><span class="p">)</span>
+</pre></table></code></div></div><div class="language-python highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plot_roc_curve</span><span class="p">(</span><span class="n">fpr_svc</span><span class="p">,</span> <span class="n">tpr_svc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'ROC curve (area = %0.2f)'</span> <span class="o">%</span> <span class="n">roc_auc_svc</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">"lower right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="c1">#save_fig("roc_curve_plot")
+</span><span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</pre></table></code></div></div><p><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2017/clf_example/output_105_0.png" alt="png" /></p><h2 id="results">Results</h2><ul><li>Looking at the PR curves we see similar performance between two models.</li><li>Due to its complexity Support Vector Machine might not be our first choice.</li></ul></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/data-science/'>Data Science</a>, <a href='/categories/tutorial/'>Tutorial</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/classification/" class="post-tag no-text-decoration" >classification</a> <a href="/tags/logistic-regression/" class="post-tag no-text-decoration" >logistic regression</a> <a href="/tags/support-vector-machine/" class="post-tag no-text-decoration" >support vector machine</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><!-- Post sharing snippet v2.1 https://github.com/cotes2020/jekyll-theme-chirpy © 2019 Cotes Chung Published under the MIT License --><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Quantifying the Quality of Classification Models - &url=https://serhanaya.github.io/posts/classification-example/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Quantifying the Quality of Classification Models - &u=https://serhanaya.github.io/posts/classification-example/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=Quantifying the Quality of Classification Models - &url=https://serhanaya.github.io/posts/classification-example/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><!-- The Pannel on right side (Desktop views) v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"><h3 data-toc-skip>Recent Update</h3><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/visual-analysis-of-tax-data-using-mathematica/">Visual Analysis of Tax Data Using Mathematica</a></li><li><a href="/posts/visual-analysis-of-cyber-threat-part-iii/">Visual Analysis of Cyber Threat - Part III</a></li><li><a href="/posts/visual-analysis-of-cyber-threat-part-ii/">Visual Analysis of Cyber Threat - Part II</a></li><li><a href="/posts/visual-analysis-of-cyber-threat-part-i/">Visual Analysis of Cyber Threat - Part I</a></li><li><a href="/posts/vagrant-multi-node-cluster-setup/">Multi-Node Cluster Setup using Vagrant</a></li></ul></div><div id="access-tags"><h3 data-toc-skip>Trending Tags</h3><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <!-- The trending tags list v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2019 Cotes Chung MIT Licensed --> <a class="post-tag" href="/tags/time-series/">time series</a> <a class="post-tag" href="/tags/visualization/">visualization</a> <a class="post-tag" href="/tags/stocks/">stocks</a> <a class="post-tag" href="/tags/neural-networks/">neural networks</a> <a class="post-tag" href="/tags/julia/">julia</a> <a class="post-tag" href="/tags/finance/">finance</a> <a class="post-tag" href="/tags/xgboost/">xgboost</a> <a class="post-tag" href="/tags/web-scraping/">web scraping</a> <a class="post-tag" href="/tags/vagrant/">vagrant</a> <a class="post-tag" href="/tags/theano/">theano</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><h3 data-toc-skip class="pl-3 pt-2 mb-3">Contents</h3><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div id="post-extend-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"> <!-- Navigation buttons at the bottom of the post. v2.1 https://github.com/cotes2020/jekyll-theme-chirpy © 2020 Cotes Chung MIT License --><div class="post-navigation d-flex justify-content-between"> <a href="/posts/vagrant-multi-node-cluster-setup/" class="btn btn-outline-primary"><p>Multi-Node Cluster Setup using Vagrant</p></a> <a href="/posts/bootstrap-regression/" class="btn btn-outline-primary"><p>Bootstrap Regression</p></a></div><!-- The related posts of current post. Placed in the bottom of every single post. v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2019 Cotes Chung Published under the MIT License --><div id="related-posts" class="mt-4 mb-2 mb-sm-4 pb-2"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/identifying-patterns-in-sales-data-part-i/"><div class="card-body"> <span class="timeago small"> Aug 18, 2018 <i class="unloaded">2018-08-18T20:00:00+03:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Identifying Patterns in Sales Data - Part I</h3><div class="text-muted small"><p>Introduction In this first part, the objective is to make sense of the data and then figure out what questions to ask and how to frame them, as well as how best to manipulate the data to get the a...</p></div></div></a></div><div class="card"> <a href="/posts/identifying-patterns-in-sales-data-part-ii/"><div class="card-body"> <span class="timeago small"> Aug 19, 2018 <i class="unloaded">2018-08-19T08:00:00+03:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Identifying Patterns in Sales Data - Part II</h3><div class="text-muted small"><p>Introduction In this second part, the objective is to predict volume_sold for product_id=13701 using the data provided. 1 2 3 4 5 6 7 8 # Plot daily data: volume_sold. style='bmh' is a style opti...</p></div></div></a></div><div class="card"> <a href="/posts/optimizing-a-simple-regression-model-in-theano/"><div class="card-body"> <span class="timeago small"> Mar 2, 2016 <i class="unloaded">2016-03-02T07:00:00+02:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Optimizing a Simple Regression Model in Theano</h3><div class="text-muted small"><p>Prior to this post, we discussed neural network design and implementation in Julia language. There are many resources on artificial neural networks. I learn by reading, however, it was overwhelming...</p></div></div></a></div></div></div></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const observer = lozad(); observer.observe(); </script> <!-- The Footer v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2020 <a href="https://github.com/serhanaya"></a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank">Jekyll</a> with theme <a href="https://github.com/cotes2020/jekyll-theme-chirpy/">Chirpy</a>.</p></div></div></footer></div><!-- The Search results v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted">Trending Tags</h4><!-- The trending tags list v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2019 Cotes Chung MIT Licensed --> <a class="post-tag" href="/tags/time-series/">time series</a> <a class="post-tag" href="/tags/visualization/">visualization</a> <a class="post-tag" href="/tags/stocks/">stocks</a> <a class="post-tag" href="/tags/neural-networks/">neural networks</a> <a class="post-tag" href="/tags/julia/">julia</a> <a class="post-tag" href="/tags/finance/">finance</a> <a class="post-tag" href="/tags/xgboost/">xgboost</a> <a class="post-tag" href="/tags/web-scraping/">web scraping</a> <a class="post-tag" href="/tags/vagrant/">vagrant</a> <a class="post-tag" href="/tags/theano/">theano</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <!-- The GA snippet v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --> <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga'); ga('create', '', 'auto'); ga('send', 'pageview'); </script> <!-- Jekyll Simple Search loader v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js" integrity="sha256-qcLR00zq6pJk4je3MLgAri8Nn+ZumUlXgTKR2H/xCY0=" crossorigin="anonymous"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://serhanaya.github.io{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>

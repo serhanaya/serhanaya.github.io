@@ -1,0 +1,483 @@
+<!DOCTYPE html><html lang="en" > <!-- The Head v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><title>Training a Deep Prediction Model using H2O |</title><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin><link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" as="style" href="/assets/css/main.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/main.css"><link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"><link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/popper.js@1.15.0/dist/umd/popper.min.js" integrity="sha256-fTuUgtT7O2rqoImwjrhDgbXTKUwyxxujIMRIK7TbuNU=" crossorigin> <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> <script> window.jQuery || document.write('<script src="/assets/lib/jquery-3.4.1.min.js"><\/script>'); </script> <script src="https://cdn.jsdelivr.net/npm/popper.js@1.15.0/dist/umd/popper.min.js" integrity="sha256-fTuUgtT7O2rqoImwjrhDgbXTKUwyxxujIMRIK7TbuNU=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha256-5+02zu5UULQkO7w1GIr6vftCgMfFdZcAHeDtFnKZsBs=" crossorigin="anonymous" async></script> <script src="/assets/js/dist/commons.js" async></script> <script src="/assets/js/dist/timeago.min.js" async></script><link rel="preload" as="style" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/syntax.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/syntax.css"><link rel="preload" as="style" href="/assets/lib/bootstrap-toc-1.0.1/bootstrap-toc.min.css"><link rel="preload" as="script" href="/assets/lib/bootstrap-toc-1.0.1/bootstrap-toc.min.js"><link rel="stylesheet" href="/assets/lib/bootstrap-toc-1.0.1/bootstrap-toc.min.css" /> <script src="/assets/lib/bootstrap-toc-1.0.1/bootstrap-toc.min.js" async></script> <script src="/assets/js/dist/toc.min.js" async></script> <script src="/assets/js/dist/tooltip-loader.min.js" async></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"> <!-- The Side Bar v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/" alt="avatar"> <img src="/assets/img/sample/bio-photo.jpg" alt="avatar"> </a></div><div class="profile-text mt-3"><div id="site-title"> <a href="/"></a></div><div id="site-subtitle" class="font-italic"></div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-home ml-3 mr-3 unloaded"></i> <span>HOME</span> </a></li><li class="nav-item d-flex justify-content-center "> <a href="/tabs/categories/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-stream ml-3 mr-3 unloaded"></i> <span>CATEGORIES</span> </a></li><li class="nav-item d-flex justify-content-center "> <a href="/tabs/tags/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-tags ml-3 mr-3 unloaded"></i> <span>TAGS</span> </a></li><li class="nav-item d-flex justify-content-center "> <a href="/tabs/archives/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-archive ml-3 mr-3 unloaded"></i> <span>ARCHIVES</span> </a></li><li class="nav-item d-flex justify-content-center "> <a href="/tabs/about/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-info ml-3 mr-3 unloaded"></i> <span>ABOUT</span> </a></li></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <span id="mode-toggle-wrapper"> <!-- Switch the mode between dark and light. v2.1 https://github.com/cotes2020/jekyll-theme-chirpy © 2020 Cotes Chung MIT License --> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightkMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightkMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/serhanaya" target="_blank"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/" target="_blank"> <i class="fab fa-twitter"></i> </a> <a href="javascript:window.open('mailto:' + ['',''].join('@'))"> <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" target="_blank"> <i class="fas fa-rss"></i> </a></div></div><!-- The Top Bar v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>Training a Deep Prediction Model using H2O</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"> <!-- Fixed kramdown code highlight rendering: https://github.com/penibelst/jekyll-compress-html/issues/101 https://github.com/penibelst/jekyll-compress-html/issues/71#issuecomment-188144901 --><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>Training a Deep Prediction Model using H2O</h1><div class="post-meta text-muted d-flex flex-column"><div> Posted <span class="timeago" data-toggle="tooltip" data-placement="bottom" title="Sun, May 1, 2016, 8:00 AM +0300"> May 1, 2016 <i class="unloaded">2016-05-01T08:00:00+03:00</i> </span> by <span class="author"> S. Aya </span></div><div> Updated <span class="timeago lastmod" data-toggle="tooltip" data-placement="bottom" title="Sat, May 2, 2020, 5:19 PM +0300"> May 2, 2020 <i class="unloaded">2020-05-02T17:19:33+03:00</i> </span></div></div><div class="post-content"><p>The objective of this study is to train and build a deep prediction model. The focus is on feedforward neural networks. We will start with the exploration of data, try to simplify it and after that, we will apply our model and investigate the results. In these steps we will use R language. For the modeling process we will use H2O R package. The data comes from a recently ended Kaggle competition: Santander Customer Satisfaction.</p><h3 id="the-h2o-package">The H2O package</h3><p>H2O implements almost all common machine learning algorithms — such as generalized linear modeling (linear regression, logistic regression, etc.), Naive Bayes, principal components analysis, time series, k-means clustering and other important algorithms such as Random Forest, Gradient Boosting and Deep Learning at scale. H2O is written in Java and is fast and scalable. The H2O R package provides an interface to the H2O software.</p><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre><span class="w">
+</span><span class="c1"># install.packages("h2o")</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">h2o</span><span class="p">)</span><span class="w">
+
+
+
+</span><span class="c1">### Kaggle: Santander Customer Satisfaction</span><span class="w">
+
+</span><span class="n">From</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">information</span><span class="w"> </span><span class="n">page</span><span class="o">:</span><span class="w"> </span><span class="s2">"Santander Bank is asking Kagglers to help them identify dissatisfied customers early in their relationship. Doing so would allow Santander to take proactive steps to improve a customer's happiness before it's too late. You are provided with an anonymized dataset containing a large number of numeric variables. The "</span><span class="n">TARGET</span><span class="s2">" column is the variable to predict. It equals one for unsatisfied customers and 0 for satisfied customers"</span><span class="n">.</span><span class="w">
+
+</span><span class="c1">#### Preprocessing</span><span class="w">
+</span><span class="n">`dplyr`</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">very</span><span class="w"> </span><span class="n">handy</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">dealing</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">frame</span><span class="w"> </span><span class="n">like</span><span class="w"> </span><span class="n">objects.</span><span class="w"> </span><span class="n">There</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">cheatsheet</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">RStudio</span><span class="w"> </span><span class="n">web</span><span class="w"> </span><span class="n">site</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">summarizes</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="n">package.</span><span class="w">
+
+</span><span class="err">```</span><span class="n">R</span><span class="w">
+
+</span><span class="c1"># install.packages("dplyr")</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span><span class="w">
+</span></pre></table></code></div></div><p>Load the data obtained from Kaggle competition page.</p><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="w">
+</span><span class="n">train</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.csv</span><span class="p">(</span><span class="s2">"..data/input/train.csv"</span><span class="p">)</span><span class="w">
+</span><span class="n">test</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.csv</span><span class="p">(</span><span class="s2">"..data/input/test.csv"</span><span class="p">)</span><span class="w">
+
+</span></pre></table></code></div></div><p>The ID column actually is not needed, we need the effects of other features which will help us predict the response of future (new) data.</p><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="n">train</span><span class="o">$</span><span class="n">ID</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">
+</span><span class="n">test.id</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">
+
+</span></pre></table></code></div></div><p>Create a column for both train and test datasets indicating the number of zeros for each row. Because we have a great deal of zeros, the amount of the for particular observation will definitely consititues a great feature (for prediction).</p><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="w">
+</span><span class="n">count0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nf">return</span><span class="p">(</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="n">train</span><span class="o">$</span><span class="n">n0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">apply</span><span class="p">(</span><span class="n">train</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">FUN</span><span class="o">=</span><span class="n">count0</span><span class="p">)</span><span class="w">
+</span><span class="n">test</span><span class="o">$</span><span class="n">n0</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">apply</span><span class="p">(</span><span class="n">test</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">FUN</span><span class="o">=</span><span class="n">count0</span><span class="p">)</span><span class="w">
+</span></pre></table></code></div></div><p>Some columns consist of constant values. Without a change in a value for a feature column how can we understand its effect in response variable? Thus, we will remove these columns with the following code snippet.</p><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="w">
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">f</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nf">names</span><span class="p">(</span><span class="n">train</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">unique</span><span class="p">(</span><span class="n">train</span><span class="p">[[</span><span class="n">f</span><span class="p">]]))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="n">train</span><span class="p">[[</span><span class="n">f</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">
+        </span><span class="n">test</span><span class="p">[[</span><span class="n">f</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="kc">NULL</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></pre></table></code></div></div><p>There are also identical columns. We will remove them as follows:</p><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="w">
+</span><span class="n">features_pair</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">combn</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">train</span><span class="p">),</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">simplify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">F</span><span class="p">)</span><span class="w">
+</span><span class="n">toRemove</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">()</span><span class="w">
+</span><span class="k">for</span><span class="p">(</span><span class="n">pair</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">features_pair</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">f1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">pair</span><span class="p">[</span><span class="m">1</span><span class="p">]</span><span class="w">
+    </span><span class="n">f2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">pair</span><span class="p">[</span><span class="m">2</span><span class="p">]</span><span class="w">
+
+    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="n">f1</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">toRemove</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="o">!</span><span class="p">(</span><span class="n">f2</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="n">toRemove</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">all</span><span class="p">(</span><span class="n">train</span><span class="p">[[</span><span class="n">f1</span><span class="p">]]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">train</span><span class="p">[[</span><span class="n">f2</span><span class="p">]]))</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="n">toRemove</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">toRemove</span><span class="p">,</span><span class="w"> </span><span class="n">f2</span><span class="p">)</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></pre></table></code></div></div><p>One of the features, “var38”, will be log-transformed because of high values (compared to other columns). Remember, scaling the data in a range is important for most of the algorithms. Please have a look at normalization, scaling etc. topics in statistical learning books for further details.</p><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="w">
+</span><span class="n">feature.names</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">setdiff</span><span class="p">(</span><span class="nf">names</span><span class="p">(</span><span class="n">train</span><span class="p">),</span><span class="w"> </span><span class="n">toRemove</span><span class="p">)</span><span class="w">
+
+</span><span class="n">train</span><span class="o">$</span><span class="n">var38</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">train</span><span class="o">$</span><span class="n">var38</span><span class="p">)</span><span class="w">
+</span><span class="n">test</span><span class="o">$</span><span class="n">var38</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">log</span><span class="p">(</span><span class="n">test</span><span class="o">$</span><span class="n">var38</span><span class="p">)</span><span class="w">
+
+</span><span class="n">train</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">train</span><span class="p">[,</span><span class="w"> </span><span class="n">feature.names</span><span class="p">]</span><span class="w">
+</span><span class="n">test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">test</span><span class="p">[,</span><span class="w"> </span><span class="n">feature.names</span><span class="p">]</span><span class="w">
+</span><span class="n">tc</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">test</span><span class="w">
+
+</span></pre></table></code></div></div><p>Limit variables in test dataset based on min and max values of train dataset.</p><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre><span class="w">
+</span><span class="n">print</span><span class="p">(</span><span class="s1">'Setting min-max lims on test data'</span><span class="p">)</span><span class="w">
+</span><span class="k">for</span><span class="p">(</span><span class="n">f</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">colnames</span><span class="p">(</span><span class="n">train</span><span class="p">)){</span><span class="w">
+    </span><span class="n">lim</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">min</span><span class="p">(</span><span class="n">train</span><span class="p">[,</span><span class="n">f</span><span class="p">])</span><span class="w">
+    </span><span class="n">test</span><span class="p">[</span><span class="n">test</span><span class="p">[,</span><span class="n">f</span><span class="p">]</span><span class="o">&lt;</span><span class="n">lim</span><span class="p">,</span><span class="n">f</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lim</span><span class="w">
+
+    </span><span class="n">lim</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">max</span><span class="p">(</span><span class="n">train</span><span class="p">[,</span><span class="n">f</span><span class="p">])</span><span class="w">
+    </span><span class="n">test</span><span class="p">[</span><span class="n">test</span><span class="p">[,</span><span class="n">f</span><span class="p">]</span><span class="o">&gt;</span><span class="n">lim</span><span class="p">,</span><span class="n">f</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lim</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></pre></table></code></div></div><p>Divide the main <code class="highlighter-rouge">train</code> datasets into s.train (for training) and s.test (for validation) datasets.s</p><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="w">
+</span><span class="n">ind</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sample</span><span class="p">(</span><span class="m">76020</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">60000</span><span class="p">)</span><span class="w">
+</span><span class="n">s.train</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">train</span><span class="p">[</span><span class="w"> </span><span class="n">ind</span><span class="p">,]</span><span class="w">
+</span><span class="n">s.test</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">train</span><span class="p">[</span><span class="o">-</span><span class="n">ind</span><span class="p">,]</span><span class="w">
+
+</span></pre></table></code></div></div><h4 id="modeling">Modeling</h4><p>Feedforward neural networks are useful for prediction and classification where there is a clearly defined outcome (what digit an image contains in digit recognition, whether someone is walking upstairs or walking on a flat surface in activity analyses, the presence/absence of disease in medical studies, and so on). In these cases, there is no particular need for a feedback loop. Recurrent networks are useful for cases where feedback loops are important, such as for natural language processing.</p><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre><span class="w">
+</span><span class="c1"># Start to H2O instance. Our configuration:</span><span class="w">
+</span><span class="c1"># Memory used: 12 GB; Number of CPUs used: 5.</span><span class="w">
+</span><span class="n">cl</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">h2o.init</span><span class="p">(</span><span class="w">
+    </span><span class="n">max_mem_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"12G"</span><span class="p">,</span><span class="w">
+    </span><span class="n">nthreads</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Import train data frame to the H2O cloud.</span><span class="w">
+</span><span class="n">h2osan.train</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.h2o</span><span class="p">(</span><span class="w">
+    </span><span class="n">s.train</span><span class="p">,</span><span class="w">
+    </span><span class="n">destination_frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"h2osantrain"</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Import test data frame to the H2O cloud.</span><span class="w">
+</span><span class="n">h2osan.test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">as.h2o</span><span class="p">(</span><span class="w">
+    </span><span class="n">s.test</span><span class="p">,</span><span class="w">
+    </span><span class="n">destination_frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"h2osantest"</span><span class="p">)</span><span class="w">
+
+</span></pre></table></code></div></div><p>In the following model, hyperbolic tangent <code class="highlighter-rouge">Tanh</code> is used as activation function. The tanh function is a rescaled and shifted logistic function and its symmetry around 0 allows the training algorithm to converge faster. We use 200 hidden neurons. <code class="highlighter-rouge">CrossEntropy</code> is selected as the loss function which has typical use in classification problems. Epochs (passes over the data) per iteration on N nodes is 100. More epochs can be used for greater predictive accuracy, but only when able to afford the computational cost. The training error value is based on the parameter <code class="highlighter-rouge">score_training_samples</code>, which specifies the number of randomly sampled training points to be used for scoring; the default uses 10,000 points. The validation error is based on the parameter <code class="highlighter-rouge">score_validation_samples</code>, which controls the same value on the validation set and is set by default to be the entire validation set. Setting either of these parameters to 0 automatically uses the entire corresponding dataset for scoring.</p><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre><span class="n">m1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">h2o.deeplearning</span><span class="p">(</span><span class="w">
+    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">setdiff</span><span class="p">(</span><span class="n">colnames</span><span class="p">(</span><span class="n">s.train</span><span class="p">),</span><span class="w"> </span><span class="s2">"TARGET"</span><span class="p">),</span><span class="w">
+    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"TARGET"</span><span class="p">,</span><span class="w">
+    </span><span class="n">training_frame</span><span class="o">=</span><span class="w"> </span><span class="n">h2osan.train</span><span class="p">,</span><span class="w">
+    </span><span class="n">validation_frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h2osan.test</span><span class="p">,</span><span class="w">
+    </span><span class="n">activation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Tanh"</span><span class="p">,</span><span class="w">
+    </span><span class="n">hidden</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">200</span><span class="p">),</span><span class="w">
+    </span><span class="n">epochs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w">
+    </span><span class="n">loss</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"CrossEntropy"</span><span class="p">,</span><span class="w">
+    </span><span class="n">score_training_samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w">
+    </span><span class="n">score_validation_samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w">
+    </span><span class="n">diagnostics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
+    </span><span class="n">export_weights_and_biases</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
+</span><span class="p">)</span><span class="w">
+
+</span></pre></table></code></div></div><p>Two important metrics for evaluation of the classification model are as follows. <em>AUC</em>, stands for area under the curve (higher is better). Here, the curve is the receiver operating characteristic curve, or ROC curve for short. The ROC curve shows the sensi‐ tivity of the classifier by plotting the rate of true positives to the rate of false positives. In other words, it shows you how many correct positive classifications can be gained as you allow for more and more false positives. The perfect classifier that makes no mistakes would hit a true positive rate of 100% immediately, without incurring any false positives (not possible). <em>Logloss</em>, or logarithmic loss, gets into the finer details of a classifier (lower is better).</p><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre>H2OBinomialMetrics: deeplearning
+
+** Reported on training data. **
+Description: Metrics reported on full training frame
+
+MSE:  0.03589137
+R^2:  0.05475529
+LogLoss:  0.1462593
+AUC:  0.7708762
+Gini:  0.5417523
+
+
+** Reported on validation data. **
+Description: Metrics reported on full validation frame
+
+MSE:  0.0361102
+R^2:  0.05282876
+LogLoss:  0.1474712
+AUC:  0.7634361
+Gini:  0.5268721
+</pre></table></code></div></div><h4 id="increasing-model-complexity">Increasing model complexity</h4><p>The values chosen for the hyperparameters can have a dramatic impact on the accuracy and training speed of a model. We will try different hyperparameters, such as trying different numbers of hidden neurons in a layer and different number of layers.</p><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="w">
+</span><span class="n">m2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">h2o.deeplearning</span><span class="p">(</span><span class="w">
+    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">setdiff</span><span class="p">(</span><span class="n">colnames</span><span class="p">(</span><span class="n">s.train</span><span class="p">),</span><span class="w"> </span><span class="s2">"TARGET"</span><span class="p">),</span><span class="w">
+    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"TARGET"</span><span class="p">,</span><span class="w">
+    </span><span class="n">training_frame</span><span class="o">=</span><span class="w"> </span><span class="n">h2osan.train</span><span class="p">,</span><span class="w">
+    </span><span class="n">validation_frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h2osan.test</span><span class="p">,</span><span class="w">
+    </span><span class="n">activation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"RectifierWithDropout"</span><span class="p">,</span><span class="w">
+    </span><span class="n">hidden</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">200</span><span class="p">,</span><span class="w"> </span><span class="m">200</span><span class="p">,</span><span class="w"> </span><span class="m">400</span><span class="p">),</span><span class="w">
+    </span><span class="n">epochs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">100</span><span class="p">,</span><span class="w">
+    </span><span class="n">loss</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"CrossEntropy"</span><span class="p">,</span><span class="w">
+    </span><span class="n">input_dropout_ratio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w">
+    </span><span class="n">hidden_dropout_ratios</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">.2</span><span class="p">,</span><span class="w"> </span><span class="m">.2</span><span class="p">,</span><span class="w"> </span><span class="m">.2</span><span class="p">),</span><span class="w">
+    </span><span class="n">score_training_samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w">
+    </span><span class="n">score_validation_samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w">
+    </span><span class="n">diagnostics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
+    </span><span class="n">export_weights_and_biases</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="w">
+</span><span class="p">)</span><span class="w">
+
+</span></pre></table></code></div></div><p>By default the <code class="highlighter-rouge">learning rate</code> is 0.005 in h2o.deeplearning() function. Changing it definitely changes the results. For example, taking rate=0.001 changes the result of AUC to 0.831185 (see the value for rate=0.005 below) for training dataset. However for validation dataset the AUC drops to 0.8097628.</p><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre>H2OBinomialMetrics: deeplearning
+
+** Reported on training data. **
+Description: Metrics reported on full training frame
+
+MSE:  0.03479285
+R^2:  0.08368613
+LogLoss:  0.13796
+AUC:  0.8264121
+Gini:  0.6528242
+
+** Reported on validation data. **
+Description: Metrics reported on full validation frame
+
+MSE:  0.03501902
+R^2:  0.08145049
+LogLoss:  0.1405888
+AUC:  0.8166218
+Gini:  0.6332437
+</pre></table></code></div></div><h4 id="tuning-the-hyperparameters">Tuning the hyperparameters</h4><p>Adding more layers dropped AUC. Changing learning rate improved the training dataset however dropped AUC in validation dataset.</p><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre><td class="rouge-code"><pre><span class="w">
+</span><span class="n">Here</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">third</span><span class="w"> </span><span class="n">model</span><span class="p">,</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">just</span><span class="w"> </span><span class="n">increased</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">epochs.</span><span class="w"> </span><span class="n">However</span><span class="p">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">worse</span><span class="w"> </span><span class="n">than</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">previous</span><span class="w"> </span><span class="n">model.</span><span class="w">
+</span><span class="n">m3</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">h2o.deeplearning</span><span class="p">(</span><span class="w">
+    </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">setdiff</span><span class="p">(</span><span class="n">colnames</span><span class="p">(</span><span class="n">s.train</span><span class="p">),</span><span class="w"> </span><span class="s2">"TARGET"</span><span class="p">),</span><span class="w">
+    </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"TARGET"</span><span class="p">,</span><span class="w">
+    </span><span class="n">training_frame</span><span class="o">=</span><span class="w"> </span><span class="n">h2osan.train</span><span class="p">,</span><span class="w">
+    </span><span class="n">validation_frame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h2osan.test</span><span class="p">,</span><span class="w">
+    </span><span class="n">activation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"RectifierWithDropout"</span><span class="p">,</span><span class="w">
+    </span><span class="n">hidden</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">200</span><span class="p">,</span><span class="w"> </span><span class="m">200</span><span class="p">,</span><span class="w"> </span><span class="m">400</span><span class="p">),</span><span class="w">
+    </span><span class="n">epochs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">500</span><span class="p">,</span><span class="w">
+    </span><span class="n">loss</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"CrossEntropy"</span><span class="p">,</span><span class="w">
+    </span><span class="n">input_dropout_ratio</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w">
+    </span><span class="n">hidden_dropout_ratios</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">.2</span><span class="p">,</span><span class="w"> </span><span class="m">.2</span><span class="p">,</span><span class="w"> </span><span class="m">.2</span><span class="p">),</span><span class="w">
+    </span><span class="n">score_training_samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w">
+    </span><span class="n">score_validation_samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w">
+    </span><span class="n">diagnostics</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
+    </span><span class="n">export_weights_and_biases</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="w">
+</span><span class="p">)</span><span class="w">
+
+</span></pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre>H2OBinomialMetrics: deeplearning
+** Reported on training data. **
+Description: Metrics reported on full training frame
+
+MSE:  0.03523647
+R^2:  0.07200288
+LogLoss:  0.1416985
+AUC:  0.8087695
+Gini:  0.617539
+
+** Reported on validation data. **
+Description: Metrics reported on full validation frame
+
+MSE:  0.03557961
+R^2:  0.06674619
+LogLoss:  0.1453598
+AUC:  0.7946069
+Gini:  0.5892137
+</pre></table></code></div></div><p>Aside from manual trial and error, two other approaches to improving hyperparameters are grid searches and random searches. In a grid search, several values for hyperparameters are specified and all possible combinations are tried. In R we can use the expand.grid() function to create all possible combinations of variables:</p><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="n">expand.grid</span><span class="p">(</span><span class="w">
+  </span><span class="n">layers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">),</span><span class="w">
+  </span><span class="n">epochs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">),</span><span class="w">
+  </span><span class="n">l1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">.001</span><span class="p">,</span><span class="w"> </span><span class="m">.01</span><span class="p">,</span><span class="w"> </span><span class="m">.05</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span></pre></table></code></div></div><h3 id="conclusions">Conclusions</h3><p>There is this problem, some of the competitions in Kaggle (like this one) have anonymized features which limits the creativity at the exploration phase. For example, I think the “var15” variable is customers’ age. So here is the distribution of this variable:</p><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+
+</span><span class="n">p.hist</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ggplot</span><span class="p">(</span><span class="n">train</span><span class="p">,</span><span class="w"> </span><span class="n">aes</span><span class="p">(</span><span class="n">var15</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">geom_histogram</span><span class="p">(</span><span class="n">binwidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">theme_classic</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">xlab</span><span class="p">(</span><span class="s2">"Age (?)"</span><span class="p">)</span><span class="w">
+</span><span class="n">print</span><span class="p">(</span><span class="n">p.hist</span><span class="p">)</span><span class="w">
+
+</span></pre></table></code></div></div><figure> <a href="/assets/img/posts/2016/H2OSantander/age_dist.png"><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2016/H2OSantander/age_dist.png" /></a><figcaption><a title="Santander Customers Age Distribution">Figure 1: The distribution of customers' age </a></figcaption></figure><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre><span class="w">
+</span><span class="n">quantile</span><span class="p">(</span><span class="n">train</span><span class="o">$</span><span class="n">var15</span><span class="p">,</span><span class="w"> </span><span class="n">probs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">.005</span><span class="p">,</span><span class="w"> </span><span class="m">.995</span><span class="p">))</span><span class="w">
+
+</span></pre></table></code></div></div><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>0.5% 99.5%
+ 22    84
+</pre></table></code></div></div><div class="language-R highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre><span class="n">s.train</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">s.train</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">filter</span><span class="p">(</span><span class="n">var15</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">22</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">var15</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">84</span><span class="p">)</span><span class="w">
+</span><span class="n">s.test</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">s.test</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">filter</span><span class="p">(</span><span class="n">var15</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="m">22</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">var15</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="m">84</span><span class="p">)</span><span class="w">
+</span></pre></table></code></div></div><p>Filtering out the extreme values has slightly positive effect on the model result on both training and validation datasets. One should keep in mind that even a minor improvement in the metrics would cause a huge leap in Kaggle leaderboards. Anyways, my complaint is that anonymizing the features of the data make the analysis process mechanic, which is not fun. If we know the feature names, we should look for it investigate for further correlations/questions etc.</p><div class="highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre>H2OBinomialMetrics: deeplearning
+** Reported on training data. **
+Description: Metrics reported on full training frame
+
+MSE:  0.03502961
+R^2:  0.08169082
+LogLoss:  0.1421556
+AUC:  0.826739
+Gini:  0.653478
+
+** Reported on validation data. **
+Description: Metrics reported on full validation frame
+
+MSE:  0.03542868
+R^2:  0.07536988
+LogLoss:  0.1459049
+AUC:  0.8171743
+Gini:  0.6343486
+</pre></table></code></div></div><h3 id="references">References</h3><ul><li>Maxout Networks. Goodfellow et al, 2013. http://arxiv.org/pdf/1302.4389.pdf</li><li>Wiley, J.F., 2016, R Deep Learning Essentials, Packt Publishing.</li><li>Buduma, N., 2016 (Expected Release Date), Fundamentals of Deep Learning (Early Release Title), O’Reilly Media, Inc.</li><li>Santander Customer Satisfaction Competition. https://www.kaggle.com/c/santander-customer-satisfaction</li></ul></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/data-science/'>Data Science</a>, <a href='/categories/kaggle-competition/'>Kaggle Competition</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/deep-learning/" class="post-tag no-text-decoration" >deep learning</a> <a href="/tags/h2o/" class="post-tag no-text-decoration" >H2O</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><!-- Post sharing snippet v2.1 https://github.com/cotes2020/jekyll-theme-chirpy © 2019 Cotes Chung Published under the MIT License --><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Training a Deep Prediction Model using H2O - &url=https://serhanaya.github.io/posts/training-a-deep-prediction-model-using-h2o/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Training a Deep Prediction Model using H2O - &u=https://serhanaya.github.io/posts/training-a-deep-prediction-model-using-h2o/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=Training a Deep Prediction Model using H2O - &url=https://serhanaya.github.io/posts/training-a-deep-prediction-model-using-h2o/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><!-- The Pannel on right side (Desktop views) v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"><h3 data-toc-skip>Recent Update</h3><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/visual-analysis-of-tax-data-using-mathematica/">Visual Analysis of Tax Data Using Mathematica</a></li><li><a href="/posts/visual-analysis-of-cyber-threat-part-iii/">Visual Analysis of Cyber Threat - Part III</a></li><li><a href="/posts/visual-analysis-of-cyber-threat-part-ii/">Visual Analysis of Cyber Threat - Part II</a></li><li><a href="/posts/visual-analysis-of-cyber-threat-part-i/">Visual Analysis of Cyber Threat - Part I</a></li><li><a href="/posts/vagrant-multi-node-cluster-setup/">Multi-Node Cluster Setup using Vagrant</a></li></ul></div><div id="access-tags"><h3 data-toc-skip>Trending Tags</h3><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <!-- The trending tags list v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2019 Cotes Chung MIT Licensed --> <a class="post-tag" href="/tags/time-series/">time series</a> <a class="post-tag" href="/tags/visualization/">visualization</a> <a class="post-tag" href="/tags/stocks/">stocks</a> <a class="post-tag" href="/tags/neural-networks/">neural networks</a> <a class="post-tag" href="/tags/julia/">julia</a> <a class="post-tag" href="/tags/finance/">finance</a> <a class="post-tag" href="/tags/xgboost/">xgboost</a> <a class="post-tag" href="/tags/web-scraping/">web scraping</a> <a class="post-tag" href="/tags/vagrant/">vagrant</a> <a class="post-tag" href="/tags/theano/">theano</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><h3 data-toc-skip class="pl-3 pt-2 mb-3">Contents</h3><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div id="post-extend-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"> <!-- Navigation buttons at the bottom of the post. v2.1 https://github.com/cotes2020/jekyll-theme-chirpy © 2020 Cotes Chung MIT License --><div class="post-navigation d-flex justify-content-between"> <a href="/posts/optimizing-a-simple-regression-model-in-theano/" class="btn btn-outline-primary"><p>Optimizing a Simple Regression Model in Theano</p></a> <a href="/posts/visual-analysis-of-cyber-threat-part-i/" class="btn btn-outline-primary"><p>Visual Analysis of Cyber Threat - Part I</p></a></div><!-- The related posts of current post. Placed in the bottom of every single post. v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2019 Cotes Chung Published under the MIT License --><div id="related-posts" class="mt-4 mb-2 mb-sm-4 pb-2"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/classification-example/"><div class="card-body"> <span class="timeago small"> Oct 10, 2017 <i class="unloaded">2017-10-10T08:00:00+03:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Quantifying the Quality of Classification Models</h3><div class="text-muted small"><p>Introduction The aim of this study is to go through the exploratory analysis and modeling process of a classification example. The model is going to be selected considering its computational co...</p></div></div></a></div><div class="card"> <a href="/posts/bootstrap-regression/"><div class="card-body"> <span class="timeago small"> Oct 12, 2017 <i class="unloaded">2017-10-12T08:00:00+03:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Bootstrap Regression</h3><div class="text-muted small"><p>Introduction We’ll use the same dataset of the previous post which is related to cancer diagnoses of different types. Each case includes information on the properties (radius, texture and ...</p></div></div></a></div><div class="card"> <a href="/posts/kaggle-rossmann-sales-prediction/"><div class="card-body"> <span class="timeago small"> Dec 21, 2015 <i class="unloaded">2015-12-21T07:00:00+02:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Kaggle - Rossmann Store Sales Prediction</h3><div class="text-muted small"><p>In this Kaggle competition, Rossmann, the second largest chain of German drug stores, challenged competitors to predict 6 weeks of daily sales for 1,115 stores located across Germany. According to ...</p></div></div></a></div></div></div></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const observer = lozad(); observer.observe(); </script> <!-- The Footer v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2020 <a href="https://github.com/serhanaya"></a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank">Jekyll</a> with theme <a href="https://github.com/cotes2020/jekyll-theme-chirpy/">Chirpy</a>.</p></div></div></footer></div><!-- The Search results v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted">Trending Tags</h4><!-- The trending tags list v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2019 Cotes Chung MIT Licensed --> <a class="post-tag" href="/tags/time-series/">time series</a> <a class="post-tag" href="/tags/visualization/">visualization</a> <a class="post-tag" href="/tags/stocks/">stocks</a> <a class="post-tag" href="/tags/neural-networks/">neural networks</a> <a class="post-tag" href="/tags/julia/">julia</a> <a class="post-tag" href="/tags/finance/">finance</a> <a class="post-tag" href="/tags/xgboost/">xgboost</a> <a class="post-tag" href="/tags/web-scraping/">web scraping</a> <a class="post-tag" href="/tags/vagrant/">vagrant</a> <a class="post-tag" href="/tags/theano/">theano</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <!-- The GA snippet v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --> <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga'); ga('create', '', 'auto'); ga('send', 'pageview'); </script> <!-- Jekyll Simple Search loader v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js" integrity="sha256-qcLR00zq6pJk4je3MLgAri8Nn+ZumUlXgTKR2H/xCY0=" crossorigin="anonymous"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://serhanaya.github.io{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>

@@ -1,0 +1,365 @@
+<!DOCTYPE html><html lang="en" > <!-- The Head v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><title>Neural Networks - Julia Implementation |</title><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="cdn.jsdelivr.net"><link rel="dns-prefetch" href="cdn.jsdelivr.net"><link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin><link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="preload" as="style" href="/assets/css/main.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/main.css"><link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"><link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/popper.js@1.15.0/dist/umd/popper.min.js" integrity="sha256-fTuUgtT7O2rqoImwjrhDgbXTKUwyxxujIMRIK7TbuNU=" crossorigin> <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> <script> window.jQuery || document.write('<script src="/assets/lib/jquery-3.4.1.min.js"><\/script>'); </script> <script src="https://cdn.jsdelivr.net/npm/popper.js@1.15.0/dist/umd/popper.min.js" integrity="sha256-fTuUgtT7O2rqoImwjrhDgbXTKUwyxxujIMRIK7TbuNU=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha256-5+02zu5UULQkO7w1GIr6vftCgMfFdZcAHeDtFnKZsBs=" crossorigin="anonymous" async></script> <script src="/assets/js/dist/commons.js" async></script> <script src="/assets/js/dist/timeago.min.js" async></script><link rel="preload" as="style" href="/assets/css/post.css"><link rel="preload" as="style" href="/assets/css/syntax.css"><link rel="stylesheet" href="/assets/css/post.css"><link rel="stylesheet" href="/assets/css/syntax.css"><link rel="preload" as="style" href="/assets/lib/bootstrap-toc-1.0.1/bootstrap-toc.min.css"><link rel="preload" as="script" href="/assets/lib/bootstrap-toc-1.0.1/bootstrap-toc.min.js"><link rel="stylesheet" href="/assets/lib/bootstrap-toc-1.0.1/bootstrap-toc.min.css" /> <script src="/assets/lib/bootstrap-toc-1.0.1/bootstrap-toc.min.js" async></script> <script src="/assets/js/dist/toc.min.js" async></script> <script src="/assets/js/dist/tooltip-loader.min.js" async></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column"> <!-- The Side Bar v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><div id="nav-wrapper"><div id="profile-wrapper" class="d-flex flex-column"><div id="avatar" class="d-flex justify-content-center"> <a href="/" alt="avatar"> <img src="/assets/img/sample/bio-photo.jpg" alt="avatar"> </a></div><div class="profile-text mt-3"><div id="site-title"> <a href="/"></a></div><div id="site-subtitle" class="font-italic"></div></div></div><ul class="nav flex-column"><li class="nav-item d-flex justify-content-center "> <a href="/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-home ml-3 mr-3 unloaded"></i> <span>HOME</span> </a></li><li class="nav-item d-flex justify-content-center "> <a href="/tabs/categories/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-stream ml-3 mr-3 unloaded"></i> <span>CATEGORIES</span> </a></li><li class="nav-item d-flex justify-content-center "> <a href="/tabs/tags/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-tags ml-3 mr-3 unloaded"></i> <span>TAGS</span> </a></li><li class="nav-item d-flex justify-content-center "> <a href="/tabs/archives/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-archive ml-3 mr-3 unloaded"></i> <span>ARCHIVES</span> </a></li><li class="nav-item d-flex justify-content-center "> <a href="/tabs/about/" class="nav-link d-flex justify-content-center align-items-center w-100"> <i class="fa-fw fas fa-info ml-3 mr-3 unloaded"></i> <span>ABOUT</span> </a></li></ul></div><div class="sidebar-bottom d-flex flex-wrap justify-content-around mt-4"> <span id="mode-toggle-wrapper"> <!-- Switch the mode between dark and light. v2.1 https://github.com/cotes2020/jekyll-theme-chirpy © 2020 Cotes Chung MIT License --> <i class="mode-toggle fas fa-sun" dark-mode-invisible></i> <i class="mode-toggle fas fa-moon" light-mode-invisible></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.mode != null) { if (this.mode == ModeToggle.DARK_MODE) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.mode != null) { if (self.mode == ModeToggle.DARK_MODE) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightkMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightkMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span> <span class="icon-border"></span> <a href="https://github.com/serhanaya" target="_blank"> <i class="fab fa-github-alt"></i> </a> <a href="https://twitter.com/" target="_blank"> <i class="fab fa-twitter"></i> </a> <a href="javascript:window.open('mailto:' + ['',''].join('@'))"> <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" target="_blank"> <i class="fas fa-rss"></i> </a></div></div><!-- The Top Bar v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Posts </a> </span> <span>Neural Networks - Julia Implementation</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"> <!-- Fixed kramdown code highlight rendering: https://github.com/penibelst/jekyll-compress-html/issues/101 https://github.com/penibelst/jekyll-compress-html/issues/71#issuecomment-188144901 --><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>Neural Networks - Julia Implementation</h1><div class="post-meta text-muted d-flex flex-column"><div> Posted <span class="timeago" data-toggle="tooltip" data-placement="bottom" title="Fri, Jan 15, 2016, 7:00 AM +0200"> Jan 15, 2016 <i class="unloaded">2016-01-15T07:00:00+02:00</i> </span> by <span class="author"> S. Aya </span></div></div><div class="post-content"><p>Artificial Neural networks are extensively used as a statistical learning tool, and due to the interest in understanding how the brain functions and how it could be modeled we have been witnessing an increasing interest. Although numerous alternative models and learning approaches are studied, scientists mainly focus on artificial neural networks. This post mostly covers multilayer neural networks. These are the notes I take while studying the neural network programming. I give a glimpse of modeling process and implementation in Julia with lots of references to the main repository (<a href="https://github.com/serhanaya/juliaML/tree/master/NeuralNetworks">link</a>). Julia has similar syntax with other technical computing languages such as python, Matlab etc. It is fast, it provides distributed parallel execution which is the main computing paradigm for these days and the developers agree on its mathematical sophistication (<a href="http://www.nextplatform.com/2016/01/26/dirt-simple-hpc-making-the-case-for-julia/">link</a>). I used in a part of my PhD studies, and loved it. All right that is enough language aficionado for now. Let’s dive into neural networks, and see how Julia language differs from the others. For detailed information, please check the references.</p><h3 id="the-learning-process">The Learning Process</h3><p>We can think of a <em>neuron</em> as having a signal collector in the inputs and activation unit in the output that can trigger a signal that will be forwarded to other neurons. Neural Networks consist of several <em>layers</em> and all of these layers are actually <em>neuron</em> groups. From now on, I assume that you either cloned or downloaded my NeuralNetwork repository, because I decided not to embed all the code here for the sake of brevity.</p><figure> <a href="/assets/img/posts/2016/NeuralNetworks/nnetwork_figure1_neuron.png"><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2016/NeuralNetworks/nnetwork_figure1_neuron.png" /></a><figcaption><a title="No title">Figure 1: Neurons (top) and schematical view of a biological network of neurons (bottom)</a></figcaption></figure><p><strong>Perceptron</strong> and <strong>adaline</strong> are the two examples of one layer neural architectures that can be examined as simple learning algorithms:</p><h4 id="perceptron">Perceptron</h4><p>The perceptrons learn by only taking into account the error between the target and the output, and the learning rate \(\eta\). The update rule is:</p>\[\text{$\Delta $w}_i=\eta x_i(k) (t(k)-y(k))\]<p>In these equations, \(w_i\) is the weight connecting the \(i^{th}\) input to the neuron, \(t[k]\) is the target output for the \(k^{th}\) sample, \(y[k]\) is the result of the neural network for the \(k^{th}\) sample, \(x_i[k]\) is the \(i^{th}\) input for the \(k^{th}\) sample, and lastly \(\eta\) is the learning rate. Perceptrons can be applied to solve linear separation problems but there are limitations with respect to the classication of nonlinear data.</p><h4 id="delta-rule">Delta Rule</h4><p>A better algorithm based on the gradient descent method was developed to consider nonlinearity as well as its derivative. What this algorithm has in addition to the perceptron rule is the derivative of the activation function \(g(h)\), with \(h\) being the weighted sum of all the neuron inputs before passing them to the activation function. So, the update rule is as follows:</p>\[\text{$\Delta $w}_i=\eta g' h_i(k) x_i(k) (t(k)-y(k))\]<div class="language-julia highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre><td class="rouge-code"><pre><span class="c"># Implement the perceptron and adaline rules, as well as the Delta rule.</span>
+<span class="c"># Details on https://github.com/serhanaya/juliaML</span>
+
+<span class="nd">@enum</span> <span class="n">TrainingTypesENUM</span> <span class="n">PERCEPTRON</span> <span class="n">ADALINE</span>  <span class="c"># Enum training type. Used for training neural networks.</span>
+
+<span class="c"># Update the weights of a given neuron using calcNewWeight function.</span>
+<span class="c"># ----------</span>
+<span class="c"># Parameters</span>
+<span class="c"># ----------</span>
+<span class="c"># training type (Adaline or Perceptron)</span>
+<span class="c"># inputWeightOld (the old weights)</span>
+<span class="c"># n (neural network under training)</span>
+<span class="c"># error (difference between target and neural output)</span>
+<span class="c"># trainsample (input to the weight)</span>
+<span class="c"># netValue (weighted sum before processing by activation function)</span>
+
+<span class="k">function</span><span class="nf"> calcNewWeight</span><span class="x">(</span><span class="n">trainType</span><span class="o">::</span><span class="n">TrainingTypesENUM</span><span class="x">,</span> <span class="n">inputWeightOld</span><span class="o">::</span><span class="kt">Float64</span><span class="x">,</span>
+    <span class="n">n</span><span class="o">::</span><span class="n">NeuralNet</span><span class="x">,</span> <span class="n">error</span><span class="o">::</span><span class="kt">Float64</span><span class="x">,</span> <span class="n">trainSample</span><span class="o">::</span><span class="kt">Float64</span><span class="x">,</span> <span class="n">netValue</span><span class="o">::</span><span class="kt">Float64</span><span class="x">)</span>
+
+    <span class="k">if</span> <span class="n">trainType</span> <span class="o">==</span> <span class="n">TrainingTypesENUM</span><span class="x">(</span><span class="n">PERCEPTRON</span><span class="x">)</span>
+        <span class="k">return</span> <span class="x">(</span> <span class="n">inputWeightOld</span> <span class="o">+</span> <span class="n">n</span><span class="o">.</span><span class="n">learningRate</span> <span class="o">*</span> <span class="n">error</span> <span class="o">*</span> <span class="n">trainSample</span> <span class="x">)</span>
+    <span class="k">elseif</span> <span class="n">trainType</span> <span class="o">==</span> <span class="n">TrainingTypesENUM</span><span class="x">(</span><span class="n">ADALINE</span><span class="x">)</span>
+        <span class="k">return</span> <span class="x">(</span> <span class="n">inputWeightOld</span> <span class="o">+</span> <span class="n">n</span><span class="o">.</span><span class="n">learningRate</span> <span class="o">*</span> <span class="n">error</span> <span class="o">*</span> <span class="n">trainSample</span> <span class="o">*</span>
+            <span class="n">derivativeActivationFnc</span><span class="x">(</span><span class="n">n</span><span class="o">.</span><span class="n">activationFncType</span><span class="x">,</span> <span class="n">netValue</span><span class="x">)</span> <span class="x">)</span>  <span class="c"># derivative of the activation function that is called</span>
+                                                                      <span class="c"># for the Adaline training type, which is the Delta rule.</span>
+    <span class="k">else</span>
+        <span class="n">throw</span><span class="x">(</span><span class="kt">ArgumentError</span><span class="x">(</span><span class="n">trainType</span> <span class="o">+</span> <span class="s">" does not exist in TrainingTypesENUM"</span><span class="x">))</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+</pre></table></code></div></div><h4 id="multilayer-perceptrons">Multilayer perceptrons</h4><p>Neural networks can be composed of several linked layers, forming the so-called multilayer networks. Multilayer perceptrons can have any number of layers and any number of neurons in each layer. In the MLP architecture there are three types of layers: input, hidden, and output. Hidden layers can be connected in series of in any number, thus forming a deep neural network. However, one should keep in mind that more layers mean slower process.</p><figure> <a href="/assets/img/posts/2016/NeuralNetworks/nnetwork_figure2_MLP1.png"><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2016/NeuralNetworks/nnetwork_figure2_MLP1.png" /></a><figcaption><a title="No title">Figure 2: A neural network model</a></figcaption></figure><p>The circles in Figure 2 denote the inputs to the network. The ones labeled “+1” are called bias units, which correspond to the intercept term. The leftmost layer of the network is called the input layer, and the rightmost layer the output layer. The middle layer of nodes is called the hidden layer, because its values are not observed in the training set. We also say that our example neural network has n input units (not counting the bias unit), m hidden units, and p output units. The implementation of this layer hierarchy in the <code class="highlighter-rouge">layer.jl</code> file, the layer types defined as Input Layer, Output Layer and Hidden Layer.</p><div class="language-julia highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="nd">@enum</span> <span class="n">ActivationFncENUM</span> <span class="n">STEP</span> <span class="n">LINEAR</span> <span class="n">SIGLOG</span> <span class="n">HYPERTAN</span>
+</pre></table></code></div></div><p>It is recommended that the activation functions be nonlinear in the hidden layers, particularly if in the output layer the activation function is linear. Having a linear activation function in all layers is equivalent to having only one output layer, provided that the additional variables introduced by the layers would be mere linear combinations of the previous ones or the inputs (Soares and Souza, 2016). Usually, the sigmoid function is selected as activation function. Thus, our single neuron corresponds exactly to the input-output mapping defined by logistic regression (SIGLOG). We create an <code class="highlighter-rouge">Enum</code> type with name <code class="highlighter-rouge">ActivationFncENUM</code> and <code class="highlighter-rouge">enum</code> member values of STEP, LINEAR, SIGLOG and HYPERTAN in <code class="highlighter-rouge">neuralNet.jl</code>. Please see the functions <code class="highlighter-rouge">activationFnc</code> and <code class="highlighter-rouge">derivativeActivationFnc</code> functions in <code class="highlighter-rouge">training.jl</code> for implementation details.</p><h5 id="backpropagation">Backpropagation</h5><p>As seen from the flowchart (Fig.3) he backpropagation algorithm has two phases, (1) Forward the neural signals and (2) Backpropagate the error.</p><figure> <a href="/assets/img/posts/2016/NeuralNetworks/nnetwork_figure3_MLP2.png"><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2016/NeuralNetworks/nnetwork_figure3_MLP2.png" /></a><figcaption><a title="No title">Figure 3: Backpropagation algorithm flowchart</a></figcaption></figure><p>The train method calls forward and backpropagation. First loop handles stop conditions. Second loop goes over every data point in the training dataset, repeating for each data point the training process, first calling the forward function and then the backpropagation function. After going over all the data points in the training set, this method sets the current MSE, prints it on the screen, and increases the number of epochs.</p><div class="language-julia highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre><td class="rouge-code"><pre><span class="c"># Training method for BP.</span>
+
+<span class="k">function</span><span class="nf"> trainBP</span><span class="o">!</span><span class="x">(</span><span class="n">n</span><span class="o">::</span><span class="n">NeuralNet</span><span class="x">)</span>
+    <span class="n">epoch</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c"># Number of iterations.</span>
+    <span class="n">mse</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c"># Mean squared error.</span>
+
+    <span class="k">while</span> <span class="n">mse</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">.</span><span class="n">targetError</span>  <span class="c"># Stop condition 1.</span>
+        <span class="k">if</span> <span class="n">epoch</span> <span class="o">&gt;=</span> <span class="n">n</span><span class="o">.</span><span class="n">maxEpochs</span>  <span class="c"># Stop condition 2.</span>
+            <span class="n">break</span>
+        <span class="k">end</span>
+
+        <span class="n">rows</span> <span class="o">=</span> <span class="n">size</span><span class="x">(</span><span class="n">n</span><span class="o">.</span><span class="n">trainSet</span><span class="x">)[</span><span class="mi">1</span><span class="x">]</span>
+        <span class="n">sumErrors</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="k">for</span> <span class="n">rows_i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="n">rows</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">forward!</span><span class="x">(</span><span class="n">n</span><span class="x">,</span> <span class="n">rows_i</span><span class="x">)</span>  <span class="c"># Call forward! function.</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">backpropagation!</span><span class="x">(</span><span class="n">n</span><span class="x">,</span> <span class="n">rows_i</span><span class="x">)</span>  <span class="c"># Call backpropagation! function</span>
+            <span class="n">sumErrors</span> <span class="o">=</span> <span class="n">sumErrors</span> <span class="o">+</span> <span class="n">n</span><span class="o">.</span><span class="n">errorMean</span>  <span class="c"># The errors are summed up.</span>
+        <span class="k">end</span>
+
+        <span class="n">mse</span> <span class="o">=</span> <span class="n">sumErrors</span> <span class="o">/</span> <span class="n">rows</span>  <span class="c"># Update the MSE.</span>
+        <span class="n">println</span><span class="x">(</span><span class="n">mse</span><span class="x">)</span>
+        <span class="n">epoch</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c"># Update number of epochs.</span>
+    <span class="k">end</span>
+    <span class="n">println</span><span class="x">(</span><span class="s">"Number of epochs: "</span><span class="x">,</span> <span class="n">epoch</span><span class="x">)</span>
+    <span class="k">return</span> <span class="n">n</span>
+<span class="k">end</span>
+</pre></table></code></div></div><p>The forward function executes the neural computation from the input to the output layers. For simplicity, this implementation will handle only one hidden layer and one output layer, provided that this simple architecture is proved to work quite well when compared to multiple hidden layer networks. The function receives as a parameter the neural network and the row of the dataset to be forwarded. It initializes some parameters such as sum error and the estimated and real outputs. There is basically one major loop containing two minor loops, one for the hidden layer and the other for the output layer. After computing the outputs for the hidden and output layers, this function nally calculates the error, which will be used for backpropagation.</p><div class="language-julia highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+</pre><td class="rouge-code"><pre><span class="c"># The forward function executes the neural computation from the input to the output layers.</span>
+
+<span class="k">function</span><span class="nf"> forward</span><span class="o">!</span><span class="x">(</span><span class="n">n</span><span class="o">::</span><span class="n">NeuralNet</span><span class="x">,</span> <span class="n">row</span><span class="o">::</span><span class="kt">Int</span><span class="x">)</span>
+    <span class="n">listOfHiddenLayer</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">listOfHiddenLayer</span>
+    <span class="n">estimatedOutput</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">realOutput</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">sumError</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="k">if</span> <span class="n">size</span><span class="x">(</span><span class="n">listOfHiddenLayer</span><span class="x">)[</span><span class="mi">1</span><span class="x">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="n">hiddenLayer_i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">hiddenLayer</span><span class="o">::</span><span class="n">HiddenLayer</span> <span class="k">in</span> <span class="n">listOfHiddenLayer</span>
+            <span class="n">numberOfNeuronsInLayer</span> <span class="o">=</span> <span class="n">hiddenLayer</span><span class="o">.</span><span class="n">numberOfNeuronsInLayer</span>
+            <span class="k">for</span> <span class="n">neuron</span><span class="o">::</span><span class="n">Neuron</span> <span class="k">in</span> <span class="n">hiddenLayer</span><span class="o">.</span><span class="n">listOfNeurons</span>
+                <span class="n">netValueOut</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="k">if</span> <span class="n">size</span><span class="x">(</span><span class="n">neuron</span><span class="o">.</span><span class="n">listOfWeightIn</span><span class="x">)[</span><span class="mi">1</span><span class="x">]</span> <span class="o">&gt;</span> <span class="mi">0</span>  <span class="c"># exclude bias</span>
+                    <span class="n">netValue</span> <span class="o">=</span> <span class="mf">0.0</span>
+                    <span class="k">for</span> <span class="n">layer_j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="n">numberOfNeuronsInLayer</span>  <span class="c"># exclude bias</span>
+                        <span class="n">hiddenWeightIn</span> <span class="o">=</span> <span class="n">neuron</span><span class="o">.</span><span class="n">listOfWeightIn</span><span class="x">[</span><span class="n">layer_j</span><span class="x">]</span>
+                        <span class="n">netValue</span> <span class="o">=</span> <span class="n">netValue</span> <span class="o">+</span> <span class="n">hiddenWeightIn</span> <span class="o">*</span> <span class="n">n</span><span class="o">.</span><span class="n">trainSet</span><span class="x">[</span><span class="n">row</span><span class="x">,</span> <span class="n">layer_j</span><span class="x">]</span>
+                    <span class="k">end</span>
+                    <span class="c"># output hidden layer (1)</span>
+                    <span class="n">netValueOut</span> <span class="o">=</span> <span class="n">activationFnc</span><span class="x">(</span><span class="n">n</span><span class="o">.</span><span class="n">activationFncType</span><span class="x">,</span> <span class="n">netValue</span><span class="x">)</span>
+                    <span class="n">neuron</span><span class="o">.</span><span class="n">outputValue</span> <span class="o">=</span> <span class="n">netValueOut</span>
+                <span class="k">else</span>
+                    <span class="n">neuron</span><span class="o">.</span><span class="n">outputValue</span> <span class="o">=</span> <span class="mf">1.0</span>
+                <span class="k">end</span>
+            <span class="k">end</span>
+            <span class="c"># output hidden layer (2)</span>
+            <span class="k">for</span> <span class="n">outLayer_i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="n">n</span><span class="o">.</span><span class="n">outputLayer</span><span class="o">.</span><span class="n">numberOfNeuronsInLayer</span>
+                <span class="n">netValue</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="n">netValueOut</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="k">for</span> <span class="n">neuron</span><span class="o">::</span><span class="n">Neuron</span> <span class="k">in</span> <span class="n">hiddenLayer</span><span class="o">.</span><span class="n">listOfNeurons</span>
+                    <span class="n">hiddenWeightOut</span> <span class="o">=</span> <span class="n">neuron</span><span class="o">.</span><span class="n">listOfWeightOut</span><span class="x">[</span><span class="n">outLayer_i</span><span class="x">]</span>
+                    <span class="n">netValue</span> <span class="o">=</span> <span class="n">netValue</span> <span class="o">+</span> <span class="n">hiddenWeightOut</span> <span class="o">*</span> <span class="n">neuron</span><span class="o">.</span><span class="n">outputValue</span>
+                <span class="k">end</span>
+                <span class="n">netValueOut</span> <span class="o">=</span> <span class="n">activationFnc</span><span class="x">(</span><span class="n">n</span><span class="o">.</span><span class="n">activationFncOutputLayer</span><span class="x">,</span> <span class="n">netValue</span><span class="x">)</span>
+                <span class="n">n</span><span class="o">.</span><span class="n">outputLayer</span><span class="o">.</span><span class="n">listOfNeurons</span><span class="x">[</span><span class="n">outLayer_i</span><span class="x">]</span><span class="o">.</span><span class="n">outputValue</span> <span class="o">=</span> <span class="n">netValueOut</span>
+                <span class="c"># error</span>
+                <span class="n">estimatedOutput</span> <span class="o">=</span> <span class="n">netValueOut</span>
+                <span class="n">realOutput</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">realMatrixOutputSet</span><span class="x">[</span><span class="n">row</span><span class="x">,</span> <span class="n">outLayer_i</span><span class="x">]</span>
+                <span class="n">error</span> <span class="o">=</span> <span class="n">realOutput</span> <span class="o">-</span> <span class="n">estimatedOutput</span>
+                <span class="n">n</span><span class="o">.</span><span class="n">outputLayer</span><span class="o">.</span><span class="n">listOfNeurons</span><span class="x">[</span><span class="n">outLayer_i</span><span class="x">]</span><span class="o">.</span><span class="n">error</span>
+                <span class="n">sumError</span> <span class="o">=</span> <span class="n">sumError</span> <span class="o">+</span> <span class="n">error</span><span class="o">^</span><span class="mi">2</span>
+            <span class="k">end</span>
+            <span class="c"># error mean</span>
+            <span class="n">errorMean</span> <span class="o">=</span> <span class="n">sumError</span> <span class="o">/</span> <span class="n">n</span><span class="o">.</span><span class="n">outputLayer</span><span class="o">.</span><span class="n">numberOfNeuronsInLayer</span>
+            <span class="n">n</span><span class="o">.</span><span class="n">errorMean</span> <span class="o">=</span> <span class="n">errorMean</span>
+            <span class="n">n</span><span class="o">.</span><span class="n">listOfHiddenLayer</span><span class="x">[</span><span class="n">hiddenLayer_i</span><span class="x">]</span><span class="o">.</span><span class="n">listOfNeurons</span> <span class="o">=</span> <span class="n">hiddenLayer</span><span class="o">.</span><span class="n">listOfNeurons</span>
+            <span class="n">hiddenLayer_i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+    <span class="k">return</span> <span class="n">n</span>
+<span class="k">end</span>
+</pre></table></code></div></div><figure> <a href="/assets/img/posts/2016/NeuralNetworks/nnetwork_figure4_backpropagationerror.png"><img class="lozad" src= /assets/img/commons/loading.png data-src="/assets/img/posts/2016/NeuralNetworks/nnetwork_figure4_backpropagationerror.png" /></a><figcaption><a title="No title">Figure 4: Backpropagation Error </a></figcaption></figure><p>The backpropagation function also receives as parameters the neural network and the row indicating the data point to be trained. The sensibility for the output layer is quite simple. Looking at the line computing the sensibility parameter shows us the delta rule. For the hidden layer, there is a need to sum up the weights and the sensibilities of the output layer. The local variable called tempSensibility handles this sum, after being used in the calculation of the sensibility. It can be seen that this parameter is calculated inside a loop that runs over all neurons contained in that layer. The weight updating in the output layer is as simple as its respective sensibility. There is a loop inside this part to walk over all the hidden layer neurons connected to each output neuron. The local variable called newWeight is in charge of receiving the new value for the respective weight.</p><div class="language-julia highlighter-rouge"><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+</pre><td class="rouge-code"><pre>
+<span class="c"># Backpropagation function receives as parameters the neural network and the row</span>
+<span class="c"># indicating the data point to be trained.</span>
+<span class="c"># This function is divided into six parts:</span>
+<span class="c"># 1. Initialize training parameters and retrieve neural network layers (hidden and output).</span>
+<span class="c"># 2. Calculate the sensibility for the output layer.</span>
+<span class="c"># 3. Calculate the sensibility for the hidden layer.</span>
+<span class="c"># 4. Update the weights of the output layer.</span>
+<span class="c"># 5. Update the weights of the hidden layer.</span>
+<span class="c"># 6. Update the neural layers in the neural network.</span>
+
+
+<span class="k">function</span><span class="nf"> backpropagation</span><span class="o">!</span><span class="x">(</span><span class="n">n</span><span class="o">::</span><span class="n">NeuralNet</span><span class="x">,</span> <span class="n">row</span><span class="o">::</span><span class="kt">Int</span><span class="x">)</span>
+    <span class="c"># Part 1. Retrieve neural network layers and initialize training parameters.</span>
+    <span class="n">outputLayer</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">outputLayer</span><span class="o">.</span><span class="n">listOfNeurons</span>  <span class="c"># Retreive output layer</span>
+    <span class="n">hiddenLayer</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">listOfHiddenLayer</span><span class="x">[</span><span class="mi">1</span><span class="x">]</span><span class="o">.</span><span class="n">listOfNeurons</span>  <span class="c"># Retreive hidden layer</span>
+    <span class="n">error</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">netValue</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">sensibility</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="c"># Part2. Calculate the sensibility of the output layer.</span>
+    <span class="k">for</span> <span class="n">neuron</span><span class="o">::</span><span class="n">Neuron</span> <span class="k">in</span> <span class="n">outputLayer</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">neuron</span><span class="o">.</span><span class="n">error</span>
+        <span class="n">netValue</span> <span class="o">=</span> <span class="n">neuron</span><span class="o">.</span><span class="n">outputValue</span>
+        <span class="n">sensibility</span> <span class="o">=</span> <span class="n">derivativeActivationFnc</span><span class="x">(</span><span class="n">n</span><span class="o">.</span><span class="n">activationFncOutputLayer</span><span class="x">,</span> <span class="n">netValue</span> <span class="o">*</span> <span class="n">error</span><span class="x">)</span>
+        <span class="n">neuron</span><span class="o">.</span><span class="n">sensibility</span> <span class="o">=</span> <span class="n">sensibility</span>
+    <span class="k">end</span>
+
+    <span class="c"># Part 3. Calculate the sensibility of the hidden layer</span>
+    <span class="k">for</span> <span class="n">neuron</span><span class="o">::</span><span class="n">Neuron</span> <span class="k">in</span> <span class="n">hiddenLayer</span>
+        <span class="n">sensibility</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">if</span> <span class="x">(</span><span class="n">size</span><span class="x">(</span><span class="n">neuron</span><span class="o">.</span><span class="n">listOfWeightIn</span><span class="x">)[</span><span class="mi">1</span><span class="x">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="x">)</span> <span class="c"># exclude bias</span>
+            <span class="n">listOfWeightsOut</span> <span class="o">=</span> <span class="n">neuron</span><span class="o">.</span><span class="n">listOfWeightOut</span>
+            <span class="n">tempSensibility</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="n">weight_i</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">weight</span> <span class="k">in</span> <span class="n">listOfWeightsOut</span>
+                <span class="n">tempSensibility</span> <span class="o">+=</span> <span class="n">weight</span> <span class="o">*</span> <span class="n">outputLayer</span><span class="x">[</span><span class="n">weight_i</span><span class="x">]</span><span class="o">.</span><span class="n">sensibility</span>
+                <span class="n">weight_i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">end</span>
+            <span class="n">sensibility</span> <span class="o">=</span> <span class="n">derivativeActivationFnc</span><span class="x">(</span><span class="n">n</span><span class="o">.</span><span class="n">activationFncType</span><span class="x">,</span> <span class="n">neuron</span><span class="o">.</span><span class="n">outputValue</span><span class="x">)</span> <span class="o">*</span> <span class="n">tempSensibility</span>
+            <span class="n">neuron</span><span class="o">.</span><span class="n">sensibility</span> <span class="o">=</span> <span class="n">sensibility</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+
+    <span class="c"># Part 4. Update the weights of the output layer -&gt; fix weights (teach) [output layer to hidden layer]</span>
+    <span class="k">for</span> <span class="n">outLayer_i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="n">outputLayer</span><span class="o">.</span><span class="n">numberOfNeuronsInLayer</span>
+        <span class="k">for</span> <span class="n">neuron</span><span class="o">::</span><span class="n">Neuron</span> <span class="k">in</span> <span class="n">hiddenLayer</span>
+            <span class="n">netWeight</span> <span class="o">=</span> <span class="n">neuron</span><span class="o">.</span><span class="n">listOfWeightOut</span><span class="x">[</span><span class="n">outLayer_i</span><span class="x">]</span> <span class="o">+</span>
+                <span class="x">(</span> <span class="n">n</span><span class="o">.</span><span class="n">learningRate</span> <span class="o">*</span> <span class="n">outputLayer</span><span class="x">[</span><span class="n">outLayer_i</span><span class="x">]</span><span class="o">.</span><span class="n">sensibility</span> <span class="o">*</span> <span class="n">neuron</span><span class="o">.</span><span class="n">outputValue</span> <span class="x">)</span>
+            <span class="n">neuron</span><span class="o">.</span><span class="n">listOfWeightOut</span><span class="x">[</span><span class="n">outLayer_i</span><span class="x">]</span> <span class="o">=</span> <span class="n">newWeight</span>  <span class="c"># TODO: check</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+
+    <span class="c"># Part 5. Update the weights of the hidden layer -&gt; fix weights (teach) [hidden layer to input layer]</span>
+    <span class="k">for</span> <span class="n">neuron</span><span class="o">::</span><span class="n">Neuron</span> <span class="k">in</span> <span class="n">hiddenLayer</span>
+        <span class="n">hiddenLayerInputWeights</span> <span class="o">=</span> <span class="n">neuron</span><span class="o">.</span><span class="n">listOfWeightIn</span>
+        <span class="k">if</span> <span class="n">size</span><span class="x">(</span><span class="n">hiddenLayerInputWeights</span><span class="x">)[</span><span class="mi">1</span><span class="x">]</span> <span class="o">&gt;</span> <span class="mi">0</span>  <span class="c"># exclude bias</span>
+            <span class="n">hidden_i</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">netWeight</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">:</span><span class="n">n</span><span class="o">.</span><span class="n">inputLayer</span><span class="o">.</span><span class="n">numberOfNeuronsInLayer</span>
+                <span class="n">newWeight</span> <span class="o">=</span> <span class="n">hiddenLayerInputWeights</span><span class="x">[</span><span class="n">hidden_i</span><span class="x">]</span> <span class="o">+</span>
+                    <span class="x">(</span> <span class="n">n</span><span class="o">.</span><span class="n">learningRate</span> <span class="o">*</span> <span class="n">neuron</span><span class="o">.</span><span class="n">sensibility</span> <span class="o">*</span>
+                        <span class="n">neuron</span><span class="o">.</span><span class="n">sensibility</span> <span class="o">*</span> <span class="n">n</span><span class="o">.</span><span class="n">trainSet</span><span class="x">[</span><span class="n">row</span><span class="x">,</span> <span class="n">i</span><span class="x">]</span> <span class="x">)</span>
+                <span class="n">neuron</span><span class="o">.</span><span class="n">listOfWeightIn</span><span class="x">[</span><span class="n">hidden_i</span><span class="x">]</span> <span class="o">=</span> <span class="n">newWeight</span>
+                <span class="n">hidden_i</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">end</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+    <span class="c"># Part 6. Update the neural (hidden) layers in the neural network.</span>
+    <span class="n">n</span><span class="o">.</span><span class="n">listOfHiddenLayer</span><span class="x">[</span><span class="mi">1</span><span class="x">]</span><span class="o">.</span><span class="n">listOfNeurons</span> <span class="o">=</span> <span class="n">hiddenLayer</span>
+    <span class="k">return</span> <span class="n">n</span>
+<span class="k">end</span>
+</pre></table></code></div></div><p>For the hidden layer, it is the sensibility parameters that are used, according to the equations shown in the backpropagation section. There is also an inside loop to walk over all the neural inputs.</p><h3 id="take-aways">Take-aways</h3><p>Perceptrons can be applied to solve linear separation problems and discussed their limitations with respect to the classication of nonlinear data. To suppress these limitations, multilayer perceptrons (MLPs) and a new training algorithm called backpropagation are presented. It’s important to assimilate such concepts to understand their applications in the subsequent <a href="http://serhanaya.github.io/neural-networks-in-action/">post</a>.</p><h3 id="references">References</h3><ul><li>juliaML - NeuralNetworks repository - <a href="https://github.com/serhanaya/juliaML">link</a></li><li>Soares, F.M., Souza, A.M.F. (2016) Neural Network Programming with Java, Packt Publishing, Birmingham-Mumbai.</li><li>Stanford University Unsupervised Feature Learning and Deep Learning Tutorial - <a href="http://ufldl.stanford.edu/tutorial/supervised/MultiLayerNeuralNetworks/">link</a></li><li>Du, K.L., Swamy, M.N.S. (2014) Neural Networks and Statistical Learning, Springer-Verlag, London.</li><li>Nicolas, P.R., (2014) Scala for Machine Learning, Pack Publishing, Birmingham-Mumbai.</li></ul></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/machine-learning/'>Machine Learning</a>, <a href='/categories/theory/'>Theory</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/julia/" class="post-tag no-text-decoration" >julia</a> <a href="/tags/neural-networks/" class="post-tag no-text-decoration" >neural networks</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> by the author.</div><!-- Post sharing snippet v2.1 https://github.com/cotes2020/jekyll-theme-chirpy © 2019 Cotes Chung Published under the MIT License --><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Neural Networks - Julia Implementation - &url=https://serhanaya.github.io/posts/neural-networks-julia-implementation/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Neural Networks - Julia Implementation - &u=https://serhanaya.github.io/posts/neural-networks-julia-implementation/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=Neural Networks - Julia Implementation - &url=https://serhanaya.github.io/posts/neural-networks-julia-implementation/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank"> <i class="fa-fw fab fa-telegram"></i> </a> <i class="fa-fw fas fa-link small" onclick="copyLink()" data-toggle="tooltip" data-placement="top" title="Copy link"></i> </span></div></div></div></div></div><!-- The Pannel on right side (Desktop views) v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"><h3 data-toc-skip>Recent Update</h3><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/visual-analysis-of-tax-data-using-mathematica/">Visual Analysis of Tax Data Using Mathematica</a></li><li><a href="/posts/visual-analysis-of-cyber-threat-part-iii/">Visual Analysis of Cyber Threat - Part III</a></li><li><a href="/posts/visual-analysis-of-cyber-threat-part-ii/">Visual Analysis of Cyber Threat - Part II</a></li><li><a href="/posts/visual-analysis-of-cyber-threat-part-i/">Visual Analysis of Cyber Threat - Part I</a></li><li><a href="/posts/vagrant-multi-node-cluster-setup/">Multi-Node Cluster Setup using Vagrant</a></li></ul></div><div id="access-tags"><h3 data-toc-skip>Trending Tags</h3><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <!-- The trending tags list v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2019 Cotes Chung MIT Licensed --> <a class="post-tag" href="/tags/time-series/">time series</a> <a class="post-tag" href="/tags/visualization/">visualization</a> <a class="post-tag" href="/tags/stocks/">stocks</a> <a class="post-tag" href="/tags/neural-networks/">neural networks</a> <a class="post-tag" href="/tags/julia/">julia</a> <a class="post-tag" href="/tags/finance/">finance</a> <a class="post-tag" href="/tags/xgboost/">xgboost</a> <a class="post-tag" href="/tags/web-scraping/">web scraping</a> <a class="post-tag" href="/tags/vagrant/">vagrant</a> <a class="post-tag" href="/tags/theano/">theano</a></div></div></div><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><h3 data-toc-skip class="pl-3 pt-2 mb-3">Contents</h3><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div id="post-extend-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"> <!-- Navigation buttons at the bottom of the post. v2.1 https://github.com/cotes2020/jekyll-theme-chirpy © 2020 Cotes Chung MIT License --><div class="post-navigation d-flex justify-content-between"> <a href="/posts/visual-analysis-of-tax-data-using-mathematica/" class="btn btn-outline-primary"><p>Visual Analysis of Tax Data Using Mathematica</p></a> <a href="/posts/guided-random-search-methods/" class="btn btn-outline-primary"><p>Guided Random Search Methods - Part I</p></a></div><!-- The related posts of current post. Placed in the bottom of every single post. v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2019 Cotes Chung Published under the MIT License --><div id="related-posts" class="mt-4 mb-2 mb-sm-4 pb-2"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/neural-networks-in-action/"><div class="card-body"> <span class="timeago small"> Feb 16, 2016 <i class="unloaded">2016-02-16T07:00:00+02:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Neural Networks in Action</h3><div class="text-muted small"><p>In previous post we programmed artificial neural networks using Julia language. A dataset is ready to be explored in this link, Chars74K dataset in a Kaggle competition named “First Steps With Juli...</p></div></div></a></div><div class="card"> <a href="/posts/guided-random-search-methods/"><div class="card-body"> <span class="timeago small"> Feb 1, 2016 <i class="unloaded">2016-02-01T07:00:00+02:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Guided Random Search Methods - Part I</h3><div class="text-muted small"><p>Gradient-based methods often have to be restarted to ensure that the local optimum reached is indeed the global one. In this post, we explore three different types of solution techniques that do no...</p></div></div></a></div><div class="card"> <a href="/posts/optimizing-a-simple-regression-model-in-theano/"><div class="card-body"> <span class="timeago small"> Mar 2, 2016 <i class="unloaded">2016-03-02T07:00:00+02:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Optimizing a Simple Regression Model in Theano</h3><div class="text-muted small"><p>Prior to this post, we discussed neural network design and implementation in Julia language. There are many resources on artificial neural networks. I learn by reading, however, it was overwhelming...</p></div></div></a></div></div></div></div></div></div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script> <script type="text/javascript"> const observer = lozad(); observer.observe(); </script> <!-- The Footer v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2020 <a href="https://github.com/serhanaya"></a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank">Jekyll</a> with theme <a href="https://github.com/cotes2020/jekyll-theme-chirpy/">Chirpy</a>.</p></div></div></footer></div><!-- The Search results v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-xl-11 post-content"><div id="search-hints"><h4 class="text-muted">Trending Tags</h4><!-- The trending tags list v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2019 Cotes Chung MIT Licensed --> <a class="post-tag" href="/tags/time-series/">time series</a> <a class="post-tag" href="/tags/visualization/">visualization</a> <a class="post-tag" href="/tags/stocks/">stocks</a> <a class="post-tag" href="/tags/neural-networks/">neural networks</a> <a class="post-tag" href="/tags/julia/">julia</a> <a class="post-tag" href="/tags/finance/">finance</a> <a class="post-tag" href="/tags/xgboost/">xgboost</a> <a class="post-tag" href="/tags/web-scraping/">web scraping</a> <a class="post-tag" href="/tags/vagrant/">vagrant</a> <a class="post-tag" href="/tags/theano/">theano</a></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <!-- The GA snippet v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --> <script> (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o), m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m) })(window,document,'script','https://www.google-analytics.com/analytics.js','ga'); ga('create', '', 'auto'); ga('send', 'pageview'); </script> <!-- Jekyll Simple Search loader v2.0 https://github.com/cotes2020/jekyll-theme-chirpy © 2017-2019 Cotes Chung MIT License --> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.7.3/dest/simple-jekyll-search.min.js" integrity="sha256-qcLR00zq6pJk4je3MLgAri8Nn+ZumUlXgTKR2H/xCY0=" crossorigin="anonymous"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="https://serhanaya.github.io{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"><div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>{categories}</div><div><i class="fa fa-tag fa-fw"></i>{tags}</div></div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>' }); </script>
